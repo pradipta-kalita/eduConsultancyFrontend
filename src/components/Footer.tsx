@@ -1,11 +1,11 @@
 import { SiFacebook, SiX, SiInstagram } from 'react-icons/si';
 import { MdMail, MdPhone } from 'react-icons/md';
+import {Link} from "@tanstack/react-router";
 
 const footerLinks = [
     { name: 'About Us', href: '/about' },
-    { name: 'Services', href: '/services' },
-    { name: 'Testimonials', href: '/testimonials' },
-    { name: 'Blog', href: '/blog' },
+    { name: 'Services', href: '/courses' },
+    { name: 'Blog', href: '/blogs' },
     { name: 'Contact', href: '/contact' },
     { name: 'Privacy Policy', href: '/privacy-policy' },
     { name: 'Terms of Service', href: '/terms-of-service' },
@@ -27,16 +27,16 @@ export default function Footer() {
                         <p className="mb-4">Empowering students to achieve their academic goals and build successful futures.</p>
                         <div className="flex space-x-4">
                             {socialLinks.map((link) => (
-                                <a
+                                <Link
                                     key={link.name}
-                                    href={link.href}
+                                    to={link.href}
                                     className="text-gray-400 hover:text-white transition-colors"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     aria-label={`Visit our ${link.name} page`}
                                 >
                                     <link.icon className="h-6 w-6" />
-                                </a>
+                                </Link>
                             ))}
                         </div>
                     </div>

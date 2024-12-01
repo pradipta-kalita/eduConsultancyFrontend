@@ -1,4 +1,6 @@
-export default  function () {
+import {Link} from "@tanstack/react-router";
+
+export default  function Hero() {
     return (
         <section className="bg-gradient-to-r from-white to-gray-100 pt-14">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
@@ -12,18 +14,18 @@ export default  function () {
                             consultancy services.
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4">
-                            <a
-                                href="/consultation"
+                            <Link
+                                to="/courses"
                                 className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary-light hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                             >
                                 Get Consultation
-                            </a>
-                            <a
-                                href="/services"
+                            </Link>
+                            <Link
+                                to="/courses"
                                 className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                             >
                                 Our Courses
-                            </a>
+                            </Link>
                         </div>
                     </div>
                     <div className="order-1 md:order-2">

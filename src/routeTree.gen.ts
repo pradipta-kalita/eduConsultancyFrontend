@@ -17,6 +17,8 @@ import { Route as AuthVerifyOtpImport } from './routes/auth/verify-otp'
 import { Route as AuthSignupImport } from './routes/auth/signup'
 import { Route as AuthLoginImport } from './routes/auth/login'
 import { Route as AuthForgotPasswordImport } from './routes/auth/forgot-password'
+import { Route as LayoutTermsOfServiceImport } from './routes/_layout/terms-of-service'
+import { Route as LayoutPrivacyPolicyImport } from './routes/_layout/privacy-policy'
 import { Route as LayoutFeedbackImport } from './routes/_layout/feedback'
 import { Route as LayoutContactImport } from './routes/_layout/contact'
 import { Route as LayoutAboutImport } from './routes/_layout/about'
@@ -60,6 +62,18 @@ const AuthForgotPasswordRoute = AuthForgotPasswordImport.update({
   id: '/auth/forgot-password',
   path: '/auth/forgot-password',
   getParentRoute: () => rootRoute,
+} as any)
+
+const LayoutTermsOfServiceRoute = LayoutTermsOfServiceImport.update({
+  id: '/terms-of-service',
+  path: '/terms-of-service',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
+const LayoutPrivacyPolicyRoute = LayoutPrivacyPolicyImport.update({
+  id: '/privacy-policy',
+  path: '/privacy-policy',
+  getParentRoute: () => LayoutRoute,
 } as any)
 
 const LayoutFeedbackRoute = LayoutFeedbackImport.update({
@@ -136,6 +150,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutFeedbackImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/privacy-policy': {
+      id: '/_layout/privacy-policy'
+      path: '/privacy-policy'
+      fullPath: '/privacy-policy'
+      preLoaderRoute: typeof LayoutPrivacyPolicyImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/terms-of-service': {
+      id: '/_layout/terms-of-service'
+      path: '/terms-of-service'
+      fullPath: '/terms-of-service'
+      preLoaderRoute: typeof LayoutTermsOfServiceImport
+      parentRoute: typeof LayoutImport
+    }
     '/auth/forgot-password': {
       id: '/auth/forgot-password'
       path: '/auth/forgot-password'
@@ -208,6 +236,8 @@ interface LayoutRouteChildren {
   LayoutAboutRoute: typeof LayoutAboutRoute
   LayoutContactRoute: typeof LayoutContactRoute
   LayoutFeedbackRoute: typeof LayoutFeedbackRoute
+  LayoutPrivacyPolicyRoute: typeof LayoutPrivacyPolicyRoute
+  LayoutTermsOfServiceRoute: typeof LayoutTermsOfServiceRoute
   LayoutIndexRoute: typeof LayoutIndexRoute
   LayoutBlogsIdRoute: typeof LayoutBlogsIdRoute
   LayoutCoursesIdRoute: typeof LayoutCoursesIdRoute
@@ -219,6 +249,8 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutAboutRoute: LayoutAboutRoute,
   LayoutContactRoute: LayoutContactRoute,
   LayoutFeedbackRoute: LayoutFeedbackRoute,
+  LayoutPrivacyPolicyRoute: LayoutPrivacyPolicyRoute,
+  LayoutTermsOfServiceRoute: LayoutTermsOfServiceRoute,
   LayoutIndexRoute: LayoutIndexRoute,
   LayoutBlogsIdRoute: LayoutBlogsIdRoute,
   LayoutCoursesIdRoute: LayoutCoursesIdRoute,
@@ -234,6 +266,8 @@ export interface FileRoutesByFullPath {
   '/about': typeof LayoutAboutRoute
   '/contact': typeof LayoutContactRoute
   '/feedback': typeof LayoutFeedbackRoute
+  '/privacy-policy': typeof LayoutPrivacyPolicyRoute
+  '/terms-of-service': typeof LayoutTermsOfServiceRoute
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/signup': typeof AuthSignupRoute
@@ -249,6 +283,8 @@ export interface FileRoutesByTo {
   '/about': typeof LayoutAboutRoute
   '/contact': typeof LayoutContactRoute
   '/feedback': typeof LayoutFeedbackRoute
+  '/privacy-policy': typeof LayoutPrivacyPolicyRoute
+  '/terms-of-service': typeof LayoutTermsOfServiceRoute
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/signup': typeof AuthSignupRoute
@@ -266,6 +302,8 @@ export interface FileRoutesById {
   '/_layout/about': typeof LayoutAboutRoute
   '/_layout/contact': typeof LayoutContactRoute
   '/_layout/feedback': typeof LayoutFeedbackRoute
+  '/_layout/privacy-policy': typeof LayoutPrivacyPolicyRoute
+  '/_layout/terms-of-service': typeof LayoutTermsOfServiceRoute
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/signup': typeof AuthSignupRoute
@@ -284,6 +322,8 @@ export interface FileRouteTypes {
     | '/about'
     | '/contact'
     | '/feedback'
+    | '/privacy-policy'
+    | '/terms-of-service'
     | '/auth/forgot-password'
     | '/auth/login'
     | '/auth/signup'
@@ -298,6 +338,8 @@ export interface FileRouteTypes {
     | '/about'
     | '/contact'
     | '/feedback'
+    | '/privacy-policy'
+    | '/terms-of-service'
     | '/auth/forgot-password'
     | '/auth/login'
     | '/auth/signup'
@@ -313,6 +355,8 @@ export interface FileRouteTypes {
     | '/_layout/about'
     | '/_layout/contact'
     | '/_layout/feedback'
+    | '/_layout/privacy-policy'
+    | '/_layout/terms-of-service'
     | '/auth/forgot-password'
     | '/auth/login'
     | '/auth/signup'
@@ -364,6 +408,8 @@ export const routeTree = rootRoute
         "/_layout/about",
         "/_layout/contact",
         "/_layout/feedback",
+        "/_layout/privacy-policy",
+        "/_layout/terms-of-service",
         "/_layout/",
         "/_layout/blogs/$id",
         "/_layout/courses/$id",
@@ -381,6 +427,14 @@ export const routeTree = rootRoute
     },
     "/_layout/feedback": {
       "filePath": "_layout/feedback.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/privacy-policy": {
+      "filePath": "_layout/privacy-policy.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/terms-of-service": {
+      "filePath": "_layout/terms-of-service.tsx",
       "parent": "/_layout"
     },
     "/auth/forgot-password": {
