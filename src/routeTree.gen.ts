@@ -11,6 +11,8 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as NotfoundImport } from './routes/notfound'
+import { Route as DashboardImport } from './routes/dashboard'
 import { Route as LayoutImport } from './routes/_layout'
 import { Route as LayoutIndexImport } from './routes/_layout/index'
 import { Route as AuthVerifyOtpImport } from './routes/auth/verify-otp'
@@ -28,6 +30,18 @@ import { Route as LayoutCoursesIdImport } from './routes/_layout/courses/$id'
 import { Route as LayoutBlogsIdImport } from './routes/_layout/blogs/$id'
 
 // Create/Update Routes
+
+const NotfoundRoute = NotfoundImport.update({
+  id: '/notfound',
+  path: '/notfound',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const DashboardRoute = DashboardImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const LayoutRoute = LayoutImport.update({
   id: '/_layout',
@@ -127,6 +141,20 @@ declare module '@tanstack/react-router' {
       path: ''
       fullPath: ''
       preLoaderRoute: typeof LayoutImport
+      parentRoute: typeof rootRoute
+    }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardImport
+      parentRoute: typeof rootRoute
+    }
+    '/notfound': {
+      id: '/notfound'
+      path: '/notfound'
+      fullPath: '/notfound'
+      preLoaderRoute: typeof NotfoundImport
       parentRoute: typeof rootRoute
     }
     '/_layout/about': {
@@ -263,6 +291,8 @@ const LayoutRouteWithChildren =
 
 export interface FileRoutesByFullPath {
   '': typeof LayoutRouteWithChildren
+  '/dashboard': typeof DashboardRoute
+  '/notfound': typeof NotfoundRoute
   '/about': typeof LayoutAboutRoute
   '/contact': typeof LayoutContactRoute
   '/feedback': typeof LayoutFeedbackRoute
@@ -280,6 +310,8 @@ export interface FileRoutesByFullPath {
 }
 
 export interface FileRoutesByTo {
+  '/dashboard': typeof DashboardRoute
+  '/notfound': typeof NotfoundRoute
   '/about': typeof LayoutAboutRoute
   '/contact': typeof LayoutContactRoute
   '/feedback': typeof LayoutFeedbackRoute
@@ -299,6 +331,8 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/_layout': typeof LayoutRouteWithChildren
+  '/dashboard': typeof DashboardRoute
+  '/notfound': typeof NotfoundRoute
   '/_layout/about': typeof LayoutAboutRoute
   '/_layout/contact': typeof LayoutContactRoute
   '/_layout/feedback': typeof LayoutFeedbackRoute
@@ -319,6 +353,8 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | ''
+    | '/dashboard'
+    | '/notfound'
     | '/about'
     | '/contact'
     | '/feedback'
@@ -335,6 +371,8 @@ export interface FileRouteTypes {
     | '/courses'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/dashboard'
+    | '/notfound'
     | '/about'
     | '/contact'
     | '/feedback'
@@ -352,6 +390,8 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/_layout'
+    | '/dashboard'
+    | '/notfound'
     | '/_layout/about'
     | '/_layout/contact'
     | '/_layout/feedback'
@@ -371,6 +411,8 @@ export interface FileRouteTypes {
 
 export interface RootRouteChildren {
   LayoutRoute: typeof LayoutRouteWithChildren
+  DashboardRoute: typeof DashboardRoute
+  NotfoundRoute: typeof NotfoundRoute
   AuthForgotPasswordRoute: typeof AuthForgotPasswordRoute
   AuthLoginRoute: typeof AuthLoginRoute
   AuthSignupRoute: typeof AuthSignupRoute
@@ -379,6 +421,8 @@ export interface RootRouteChildren {
 
 const rootRouteChildren: RootRouteChildren = {
   LayoutRoute: LayoutRouteWithChildren,
+  DashboardRoute: DashboardRoute,
+  NotfoundRoute: NotfoundRoute,
   AuthForgotPasswordRoute: AuthForgotPasswordRoute,
   AuthLoginRoute: AuthLoginRoute,
   AuthSignupRoute: AuthSignupRoute,
@@ -396,6 +440,8 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/_layout",
+        "/dashboard",
+        "/notfound",
         "/auth/forgot-password",
         "/auth/login",
         "/auth/signup",
@@ -416,6 +462,12 @@ export const routeTree = rootRoute
         "/_layout/blogs/",
         "/_layout/courses/"
       ]
+    },
+    "/dashboard": {
+      "filePath": "dashboard.tsx"
+    },
+    "/notfound": {
+      "filePath": "notfound.tsx"
     },
     "/_layout/about": {
       "filePath": "_layout/about.tsx",

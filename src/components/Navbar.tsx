@@ -12,8 +12,7 @@ const navigation = [
 
 const Navbar: React.FC = () => {
 
-    // @ts-ignore
-    const [loggedIn, setLoggedIn] = useState(false); // Simulate logged-in state
+    const [loggedIn] = useState(false); // Simulate logged-in state
 
     return (
         <nav className="bg-white text-gray-600 shadow-md fixed top-0 w-full z-10">
