@@ -1,17 +1,17 @@
 import  { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import axios from 'axios';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { LoginFormValues, loginSchema } from '../../schemas/loginSchema.tsx';
-import {createFileRoute, Link, useNavigate} from '@tanstack/react-router';
+import {createFileRoute, Link} from '@tanstack/react-router';
+import {useAuth} from "@/hooks/useAuth.ts";
 
 export const Route = createFileRoute('/auth/login')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate({ from: '/auth/login' });
+  const { login } = useAuth();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const {
     register,
@@ -22,25 +22,14 @@ function RouteComponent() {
   });
 
   const onSubmit = async (data: LoginFormValues) => {
-    setIsLoading(true); // Start the spinner
+    setIsLoading(true);
     try {
-      const response = await axios.post(
-          'http://localhost:8080/auth/login',
-          data,
-          {
-            withCredentials: true,
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          }
-      );
-      console.log('Success:', response.data);
-      setIsLoading(false); // Stop the spinner
-      await navigate({ to: '/blogs' }); // Navigate to dashboard or intended page
+      await login(data.email, data.password);
     } catch (error) {
-      console.error('Error:', error);
-      setIsLoading(false); // Stop the spinner
-      await navigate({ to: '/notfound' }); // Navigate to an error page
+      // TODO: REMOVE console.log(error)  later
+      console.log(error)
+    } finally {
+      setIsLoading(false);
     }
   };
 

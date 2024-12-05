@@ -24,8 +24,10 @@ import { Route as LayoutPrivacyPolicyImport } from './routes/_layout/privacy-pol
 import { Route as LayoutFeedbackImport } from './routes/_layout/feedback'
 import { Route as LayoutContactImport } from './routes/_layout/contact'
 import { Route as LayoutAboutImport } from './routes/_layout/about'
+import { Route as LayoutProfileIndexImport } from './routes/_layout/profile/index'
 import { Route as LayoutCoursesIndexImport } from './routes/_layout/courses/index'
 import { Route as LayoutBlogsIndexImport } from './routes/_layout/blogs/index'
+import { Route as LayoutAdminIndexImport } from './routes/_layout/admin/index'
 import { Route as LayoutCoursesIdImport } from './routes/_layout/courses/$id'
 import { Route as LayoutBlogsIdImport } from './routes/_layout/blogs/$id'
 
@@ -108,6 +110,12 @@ const LayoutAboutRoute = LayoutAboutImport.update({
   getParentRoute: () => LayoutRoute,
 } as any)
 
+const LayoutProfileIndexRoute = LayoutProfileIndexImport.update({
+  id: '/profile/',
+  path: '/profile/',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
 const LayoutCoursesIndexRoute = LayoutCoursesIndexImport.update({
   id: '/courses/',
   path: '/courses/',
@@ -117,6 +125,12 @@ const LayoutCoursesIndexRoute = LayoutCoursesIndexImport.update({
 const LayoutBlogsIndexRoute = LayoutBlogsIndexImport.update({
   id: '/blogs/',
   path: '/blogs/',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
+const LayoutAdminIndexRoute = LayoutAdminIndexImport.update({
+  id: '/admin/',
+  path: '/admin/',
   getParentRoute: () => LayoutRoute,
 } as any)
 
@@ -241,6 +255,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutCoursesIdImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/admin/': {
+      id: '/_layout/admin/'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof LayoutAdminIndexImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/blogs/': {
       id: '/_layout/blogs/'
       path: '/blogs'
@@ -253,6 +274,13 @@ declare module '@tanstack/react-router' {
       path: '/courses'
       fullPath: '/courses'
       preLoaderRoute: typeof LayoutCoursesIndexImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/profile/': {
+      id: '/_layout/profile/'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof LayoutProfileIndexImport
       parentRoute: typeof LayoutImport
     }
   }
@@ -269,8 +297,10 @@ interface LayoutRouteChildren {
   LayoutIndexRoute: typeof LayoutIndexRoute
   LayoutBlogsIdRoute: typeof LayoutBlogsIdRoute
   LayoutCoursesIdRoute: typeof LayoutCoursesIdRoute
+  LayoutAdminIndexRoute: typeof LayoutAdminIndexRoute
   LayoutBlogsIndexRoute: typeof LayoutBlogsIndexRoute
   LayoutCoursesIndexRoute: typeof LayoutCoursesIndexRoute
+  LayoutProfileIndexRoute: typeof LayoutProfileIndexRoute
 }
 
 const LayoutRouteChildren: LayoutRouteChildren = {
@@ -282,8 +312,10 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutIndexRoute: LayoutIndexRoute,
   LayoutBlogsIdRoute: LayoutBlogsIdRoute,
   LayoutCoursesIdRoute: LayoutCoursesIdRoute,
+  LayoutAdminIndexRoute: LayoutAdminIndexRoute,
   LayoutBlogsIndexRoute: LayoutBlogsIndexRoute,
   LayoutCoursesIndexRoute: LayoutCoursesIndexRoute,
+  LayoutProfileIndexRoute: LayoutProfileIndexRoute,
 }
 
 const LayoutRouteWithChildren =
@@ -305,8 +337,10 @@ export interface FileRoutesByFullPath {
   '/': typeof LayoutIndexRoute
   '/blogs/$id': typeof LayoutBlogsIdRoute
   '/courses/$id': typeof LayoutCoursesIdRoute
+  '/admin': typeof LayoutAdminIndexRoute
   '/blogs': typeof LayoutBlogsIndexRoute
   '/courses': typeof LayoutCoursesIndexRoute
+  '/profile': typeof LayoutProfileIndexRoute
 }
 
 export interface FileRoutesByTo {
@@ -324,8 +358,10 @@ export interface FileRoutesByTo {
   '/': typeof LayoutIndexRoute
   '/blogs/$id': typeof LayoutBlogsIdRoute
   '/courses/$id': typeof LayoutCoursesIdRoute
+  '/admin': typeof LayoutAdminIndexRoute
   '/blogs': typeof LayoutBlogsIndexRoute
   '/courses': typeof LayoutCoursesIndexRoute
+  '/profile': typeof LayoutProfileIndexRoute
 }
 
 export interface FileRoutesById {
@@ -345,8 +381,10 @@ export interface FileRoutesById {
   '/_layout/': typeof LayoutIndexRoute
   '/_layout/blogs/$id': typeof LayoutBlogsIdRoute
   '/_layout/courses/$id': typeof LayoutCoursesIdRoute
+  '/_layout/admin/': typeof LayoutAdminIndexRoute
   '/_layout/blogs/': typeof LayoutBlogsIndexRoute
   '/_layout/courses/': typeof LayoutCoursesIndexRoute
+  '/_layout/profile/': typeof LayoutProfileIndexRoute
 }
 
 export interface FileRouteTypes {
@@ -367,8 +405,10 @@ export interface FileRouteTypes {
     | '/'
     | '/blogs/$id'
     | '/courses/$id'
+    | '/admin'
     | '/blogs'
     | '/courses'
+    | '/profile'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/dashboard'
@@ -385,8 +425,10 @@ export interface FileRouteTypes {
     | '/'
     | '/blogs/$id'
     | '/courses/$id'
+    | '/admin'
     | '/blogs'
     | '/courses'
+    | '/profile'
   id:
     | '__root__'
     | '/_layout'
@@ -404,8 +446,10 @@ export interface FileRouteTypes {
     | '/_layout/'
     | '/_layout/blogs/$id'
     | '/_layout/courses/$id'
+    | '/_layout/admin/'
     | '/_layout/blogs/'
     | '/_layout/courses/'
+    | '/_layout/profile/'
   fileRoutesById: FileRoutesById
 }
 
@@ -459,8 +503,10 @@ export const routeTree = rootRoute
         "/_layout/",
         "/_layout/blogs/$id",
         "/_layout/courses/$id",
+        "/_layout/admin/",
         "/_layout/blogs/",
-        "/_layout/courses/"
+        "/_layout/courses/",
+        "/_layout/profile/"
       ]
     },
     "/dashboard": {
@@ -513,12 +559,20 @@ export const routeTree = rootRoute
       "filePath": "_layout/courses/$id.tsx",
       "parent": "/_layout"
     },
+    "/_layout/admin/": {
+      "filePath": "_layout/admin/index.tsx",
+      "parent": "/_layout"
+    },
     "/_layout/blogs/": {
       "filePath": "_layout/blogs/index.tsx",
       "parent": "/_layout"
     },
     "/_layout/courses/": {
       "filePath": "_layout/courses/index.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/profile/": {
+      "filePath": "_layout/profile/index.tsx",
       "parent": "/_layout"
     }
   }

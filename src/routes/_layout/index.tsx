@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 import Hero from "../../components/Hero.tsx";
-import Footer from "../../components/Footer.tsx";
+// import Footer from "../../components/Footer.tsx";
 import Testimonials from "../../components/Testimonials.tsx";
 
 
@@ -13,7 +13,7 @@ function RouteComponent() {
     <>
       <Hero />
       <Testimonials />
-      <Footer />
+      {/*<Footer />*/}
     </>
   )
 }

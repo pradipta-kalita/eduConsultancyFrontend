@@ -31,7 +31,7 @@ const mockPosts = [
     readTime: '5 min',
     views: 783,
     comments: 13,
-    image: '/placeholder.svg?height=200&width=200'
+    image: 'https://miro.medium.com/v2/resize:fit:720/format:webp/1*QnEHTb57iUU8KPQ-gBzw6w.png'
   },
   {
     id: 2,
@@ -43,7 +43,30 @@ const mockPosts = [
     readTime: '7 min',
     views: 284,
     comments: 6,
-    image: '/placeholder.svg?height=200&width=200'
+    image: 'https://miro.medium.com/v2/resize:fit:720/format:webp/1*QnEHTb57iUU8KPQ-gBzw6w.png'
+  },{
+    id: 3,
+    publication: 'Level Up Coding',
+    title: 'System design basics',
+    excerpt: 'something something',
+    author: 'Flavius Zichil',
+    date: 'Jun 12',
+    readTime: '5 min',
+    views: 783,
+    comments: 13,
+    image: 'https://miro.medium.com/v2/resize:fit:720/format:webp/1*QnEHTb57iUU8KPQ-gBzw6w.png'
+  },
+  {
+    id: 4,
+    publication: 'Science Spectrum',
+    title: 'Docker & k8s basics',
+    excerpt: 'docker and k8s basics',
+    author: 'Cole Frederick',
+    date: '4h ago',
+    readTime: '7 min',
+    views: 284,
+    comments: 6,
+    image: 'https://miro.medium.com/v2/resize:fit:720/format:webp/1*QnEHTb57iUU8KPQ-gBzw6w.png'
   },
   // Add more mock posts as needed
 ]

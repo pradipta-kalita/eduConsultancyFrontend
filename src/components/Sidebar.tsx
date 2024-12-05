@@ -24,13 +24,6 @@ const topics = [
     'UI'
 ]
 
-const whoToFollow = [
-    {
-        name: 'Bubu Tripathy',
-        role: 'Senior Software Engineer | Microservices | Cloud',
-        image: '/images/testimonials/testimonials01.png'
-    }
-]
 
 export default function Sidebar({ className = '' }: { className?: string }) {
     return (
@@ -75,29 +68,6 @@ export default function Sidebar({ className = '' }: { className?: string }) {
                     </div>
                 </section>
 
-                <section>
-                    <h2 className="font-bold text-black mb-4">Who to follow</h2>
-                    <div className="space-y-4">
-                        {whoToFollow.map((person, index) => (
-                            <div key={index} className="flex items-start space-x-3">
-                                <img
-                                    src={person.image}
-                                    alt={person.name}
-                                    width={40}
-                                    height={40}
-                                    className="rounded-full"
-                                />
-                                <div className="flex-1">
-                                    <h3 className="font-medium text-black">{person.name}</h3>
-                                    <p className="text-sm text-gray-600 line-clamp-2">{person.role}</p>
-                                </div>
-                                <button className="px-4 py-1 rounded-full border border-gray-900 text-sm font-medium hover:bg-gray-50">
-                                    Follow
-                                </button>
-                            </div>
-                        ))}
-                    </div>
-                </section>
             </div>
         </aside>
     )
