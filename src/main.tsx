@@ -6,8 +6,9 @@ import './index.css'
 // Import the generated route tree
 import { routeTree } from './routeTree.gen'
 import {Toaster} from "@/components/ui/toaster.tsx";
-import {AuthProvider} from "@/AuthProvider.tsx";
 import {ReactQueryDevtools} from "@tanstack/react-query-devtools";
+import {AuthProvider} from "@/auth/authContext.tsx";
+
 
 
 // Create queryClient
@@ -39,12 +40,12 @@ const rootElement = document.getElementById('root')!
 if (!rootElement.innerHTML) {
     const root = ReactDOM.createRoot(rootElement)
     root.render(
-        <QueryClientProvider client={queryClient}>
-            <AuthProvider>
+        <AuthProvider>
+            <QueryClientProvider client={queryClient}>
                 <RouterProvider router={router} />
-            </AuthProvider>
-            <Toaster />
-            <ReactQueryDevtools initialIsOpen={false} />
-        </QueryClientProvider>,
+                <Toaster />
+                <ReactQueryDevtools initialIsOpen={false} />
+            </QueryClientProvider>
+        </AuthProvider>,
     )
 }

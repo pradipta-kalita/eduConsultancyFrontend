@@ -1,49 +1,64 @@
-import { MessageSquare } from 'lucide-react'
 import {Link} from "@tanstack/react-router";
 
-export type BlogPost = {
-    id: number
-    publication: string
-    title: string
-    excerpt: string
-    author: string
-    date: string
-    readTime: string
-    views: number
-    comments: number
-    image: string
+
+export interface BlogPost {
+    id: string;
+    title: string;
+    publishedAt: string;
+    summary: string;
+    status: string;
+    author: string;
+    authorId: string;
 }
 
 export function BlogPostCard({ post }: { post: BlogPost }) {
+    // Format the publication date for readability
+    const formattedDate = new Date(post.publishedAt).toLocaleDateString(undefined, {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+    });
+
     return (
         <article className="py-8 border-b border-gray-200">
-            <div className="flex items-center space-x-1 text-sm">
-                <Link to="/" className="font-medium">
-                    {post.publication}
-                </Link>
+            <div className="flex items-center space-x-1 text-xs">
+                {post.author}
             </div>
             <div className="flex justify-between items-start mt-2">
                 <div className="flex-1 pr-8">
-                    <Link href="#" className="block group">
+                    <Link to={`/posts/${post.id}`} className="block group">
                         <h2 className="text-xl font-bold text-gray-900 group-hover:text-gray-700">
                             {post.title}
                         </h2>
-                        <p className="mt-2 text-gray-600 line-clamp-3">{post.excerpt}</p>
+                        <p className="mt-2 text-gray-600 line-clamp-3">{post.summary}</p>
                     </Link>
                     <div className="flex items-center mt-4 text-sm text-gray-600">
-                        <span>{post.date}</span>
+                        <span>{formattedDate}</span>
                         <span className="mx-2">·</span>
-                        <span>{post.readTime} read</span>
+                        <span>5 min read</span> {/* Static data */}
                         <span className="mx-2">·</span>
                         <span className="flex items-center">
-              <MessageSquare className="h-4 w-4 mr-1" />
-                            {post.comments}
+              <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-4 w-4 mr-1"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+              >
+                <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M8 10h.01M12 10h.01M16 10h.01M9 16h6"
+                />
+              </svg>
+              12 comments {/* Static data */}
             </span>
                     </div>
                 </div>
-                <Link href="#" className="block flex-shrink-0">
+                <Link to={`/posts/${post.id}`} className="block flex-shrink-0">
                     <img
-                        src={post.image}
+                        src="https://via.placeholder.com/112" // Static placeholder image
                         alt={post.title}
                         width={112}
                         height={112}
@@ -52,6 +67,5 @@ export function BlogPostCard({ post }: { post: BlogPost }) {
                 </Link>
             </div>
         </article>
-    )
+    );
 }
-

@@ -3,14 +3,14 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { LoginFormValues, loginSchema } from '../../schemas/loginSchema.tsx';
 import {createFileRoute, Link} from '@tanstack/react-router';
-import {useAuth} from "@/hooks/useAuth.ts";
+import {useAuth} from "@/auth/useAuth.tsx";
 
 export const Route = createFileRoute('/auth/login')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const { login } = useAuth();
+  const {login} =useAuth();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const {
@@ -21,13 +21,17 @@ function RouteComponent() {
     resolver: zodResolver(loginSchema),
   });
 
+
   const onSubmit = async (data: LoginFormValues) => {
     setIsLoading(true);
+
     try {
-      await login(data.email, data.password);
-    } catch (error) {
-      // TODO: REMOVE console.log(error)  later
-      console.log(error)
+      await login({
+        email: data.email,
+        password: data.password
+      });
+    } catch (err) {
+      console.error(err)
     } finally {
       setIsLoading(false);
     }

@@ -1,6 +1,5 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Link} from "@tanstack/react-router";
-import {useAuth} from "@/hooks/useAuth.ts";
 
 const navigation = [
     { name: 'Home', href: '/' },
@@ -12,9 +11,7 @@ const navigation = [
 ];
 
 const Navbar: React.FC = () => {
-
-    const {user} =useAuth();
-
+    const [loggedin] = useState(false);
     return (
         <nav className="bg-white text-gray-600 shadow-md fixed top-0 w-full z-10">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -39,7 +36,7 @@ const Navbar: React.FC = () => {
 
                     {/* SignUp Button or Profile Icon */}
                     <div className="flex items-center space-x-4">
-                        {(user) ? (
+                        {loggedin ? (
                             // Profile Icon (replace with actual icon or link)
                             <Link href="/profile" className="flex items-center text-gray-700 hover:text-gray-900">
                                 <svg
