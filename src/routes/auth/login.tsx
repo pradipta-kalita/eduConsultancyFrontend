@@ -2,14 +2,16 @@ import  { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { LoginFormValues, loginSchema } from '../../schemas/loginSchema.tsx';
-import {createFileRoute, Link} from '@tanstack/react-router';
-import {useAuth} from "@/auth/useAuth.tsx";
+import {createFileRoute, Link, useNavigate} from '@tanstack/react-router';
+import {useAuth} from "@/auth/authContext.tsx";
+import axios from '@/utils/axiosInstance.ts';
 
 export const Route = createFileRoute('/auth/login')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
+  const navigate =useNavigate();
   const {login} =useAuth();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -26,10 +28,18 @@ function RouteComponent() {
     setIsLoading(true);
 
     try {
-      await login({
-        email: data.email,
-        password: data.password
-      });
+      const response =await  axios.post('/auth/login', data);
+      // Assuming the response contains username, role, and accessToken
+      const { username, role, accessToken } = response.data;
+      // Store the user data (e.g., using the login method from context)
+      const user = { username, role, accessToken };
+      console.log(user)
+      login(user); // Update the user state in context
+      if(user.role=='ADMIN'){
+        navigate({to:'/admin'})
+      }else if(user.role=='STUDENT'){
+        navigate({to:'/profile'})
+      }
     } catch (err) {
       console.error(err)
     } finally {

@@ -7,12 +7,13 @@ import './index.css'
 import { routeTree } from './routeTree.gen'
 import {Toaster} from "@/components/ui/toaster.tsx";
 import {ReactQueryDevtools} from "@tanstack/react-query-devtools";
-import {AuthProvider} from "@/auth/authContext.tsx";
+import {AuthProvider} from "@/auth/authProvider.tsx";
 
 
 
 // Create queryClient
 const queryClient = new QueryClient()
+
 
 
 // Create a new router instance

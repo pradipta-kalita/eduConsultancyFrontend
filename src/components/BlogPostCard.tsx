@@ -26,7 +26,7 @@ export function BlogPostCard({ post }: { post: BlogPost }) {
             </div>
             <div className="flex justify-between items-start mt-2">
                 <div className="flex-1 pr-8">
-                    <Link to={`/posts/${post.id}`} className="block group">
+                    <Link to="/blogs/$id" params={{id: post.id}} className="block group">
                         <h2 className="text-xl font-bold text-gray-900 group-hover:text-gray-700">
                             {post.title}
                         </h2>
@@ -56,9 +56,9 @@ export function BlogPostCard({ post }: { post: BlogPost }) {
             </span>
                     </div>
                 </div>
-                <Link to={`/posts/${post.id}`} className="block flex-shrink-0">
+                <Link to="/blogs/$id" className="block flex-shrink-0" params={{id: post.id}}>
                     <img
-                        src="https://via.placeholder.com/112" // Static placeholder image
+                        src="https://miro.medium.com/v2/resize:fit:720/format:webp/1*Z7FRbJlCIIcBgNT74dhKiA.png" // Static placeholder image
                         alt={post.title}
                         width={112}
                         height={112}

@@ -1,5 +1,7 @@
-import React, {useState} from 'react';
+import React  from 'react';
 import {Link} from "@tanstack/react-router";
+import UserMenu from "@/components/UserMenu.tsx";
+import {useAuth} from "@/auth/authContext.tsx";
 
 const navigation = [
     { name: 'Home', href: '/' },
@@ -11,7 +13,7 @@ const navigation = [
 ];
 
 const Navbar: React.FC = () => {
-    const [loggedin] = useState(false);
+    const {user,logout}= useAuth();
     return (
         <nav className="bg-white text-gray-600 shadow-md fixed top-0 w-full z-10">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -36,25 +38,12 @@ const Navbar: React.FC = () => {
 
                     {/* SignUp Button or Profile Icon */}
                     <div className="flex items-center space-x-4">
-                        {loggedin ? (
-                            // Profile Icon (replace with actual icon or link)
-                            <Link href="/profile" className="flex items-center text-gray-700 hover:text-gray-900">
-                                <svg
-                                    className="w-6 h-6"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                >
-                                    <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" />
-                                    <path d="M12 15v-3" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
-                                </svg>
-                            </Link>
+                        {user ?(<UserMenu user={user} logout={logout} />
                         ) : (
-                            // Sign Up Button
+                            // Login Button
                             <Link
                                 to="/auth/signup"
-                                className="text-white font-bold bg-primary-light hover:bg-primary-dark px-6 py-2 rounded-3xl"
+                                className="flex items-center justify-center text-white font-bold bg-gradient-to-r from-orange-500 to-orange-700 hover:from-orange-600 hover:to-orange-800 px-6 py-2 rounded-full shadow-md transition-transform transform hover:scale-105"
                             >
                                 Login
                             </Link>

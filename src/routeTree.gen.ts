@@ -12,7 +12,6 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as NotfoundImport } from './routes/notfound'
-import { Route as DashboardImport } from './routes/dashboard'
 import { Route as LayoutImport } from './routes/_layout'
 import { Route as LayoutIndexImport } from './routes/_layout/index'
 import { Route as AuthVerifyOtpImport } from './routes/auth/verify-otp'
@@ -24,24 +23,19 @@ import { Route as LayoutPrivacyPolicyImport } from './routes/_layout/privacy-pol
 import { Route as LayoutFeedbackImport } from './routes/_layout/feedback'
 import { Route as LayoutContactImport } from './routes/_layout/contact'
 import { Route as LayoutAboutImport } from './routes/_layout/about'
-import { Route as LayoutProfileIndexImport } from './routes/_layout/profile/index'
+import { Route as LayoutProtectedImport } from './routes/_layout/_protected'
 import { Route as LayoutCoursesIndexImport } from './routes/_layout/courses/index'
 import { Route as LayoutBlogsIndexImport } from './routes/_layout/blogs/index'
-import { Route as LayoutAdminIndexImport } from './routes/_layout/admin/index'
 import { Route as LayoutCoursesIdImport } from './routes/_layout/courses/$id'
 import { Route as LayoutBlogsIdImport } from './routes/_layout/blogs/$id'
+import { Route as LayoutProtectedProfileIndexImport } from './routes/_layout/_protected/profile/index'
+import { Route as LayoutProtectedAdminIndexImport } from './routes/_layout/_protected/admin/index'
 
 // Create/Update Routes
 
 const NotfoundRoute = NotfoundImport.update({
   id: '/notfound',
   path: '/notfound',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const DashboardRoute = DashboardImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -110,9 +104,8 @@ const LayoutAboutRoute = LayoutAboutImport.update({
   getParentRoute: () => LayoutRoute,
 } as any)
 
-const LayoutProfileIndexRoute = LayoutProfileIndexImport.update({
-  id: '/profile/',
-  path: '/profile/',
+const LayoutProtectedRoute = LayoutProtectedImport.update({
+  id: '/_protected',
   getParentRoute: () => LayoutRoute,
 } as any)
 
@@ -128,12 +121,6 @@ const LayoutBlogsIndexRoute = LayoutBlogsIndexImport.update({
   getParentRoute: () => LayoutRoute,
 } as any)
 
-const LayoutAdminIndexRoute = LayoutAdminIndexImport.update({
-  id: '/admin/',
-  path: '/admin/',
-  getParentRoute: () => LayoutRoute,
-} as any)
-
 const LayoutCoursesIdRoute = LayoutCoursesIdImport.update({
   id: '/courses/$id',
   path: '/courses/$id',
@@ -144,6 +131,19 @@ const LayoutBlogsIdRoute = LayoutBlogsIdImport.update({
   id: '/blogs/$id',
   path: '/blogs/$id',
   getParentRoute: () => LayoutRoute,
+} as any)
+
+const LayoutProtectedProfileIndexRoute =
+  LayoutProtectedProfileIndexImport.update({
+    id: '/profile/',
+    path: '/profile/',
+    getParentRoute: () => LayoutProtectedRoute,
+  } as any)
+
+const LayoutProtectedAdminIndexRoute = LayoutProtectedAdminIndexImport.update({
+  id: '/admin/',
+  path: '/admin/',
+  getParentRoute: () => LayoutProtectedRoute,
 } as any)
 
 // Populate the FileRoutesByPath interface
@@ -157,19 +157,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutImport
       parentRoute: typeof rootRoute
     }
-    '/dashboard': {
-      id: '/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof DashboardImport
-      parentRoute: typeof rootRoute
-    }
     '/notfound': {
       id: '/notfound'
       path: '/notfound'
       fullPath: '/notfound'
       preLoaderRoute: typeof NotfoundImport
       parentRoute: typeof rootRoute
+    }
+    '/_layout/_protected': {
+      id: '/_layout/_protected'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof LayoutProtectedImport
+      parentRoute: typeof LayoutImport
     }
     '/_layout/about': {
       id: '/_layout/about'
@@ -255,13 +255,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutCoursesIdImport
       parentRoute: typeof LayoutImport
     }
-    '/_layout/admin/': {
-      id: '/_layout/admin/'
-      path: '/admin'
-      fullPath: '/admin'
-      preLoaderRoute: typeof LayoutAdminIndexImport
-      parentRoute: typeof LayoutImport
-    }
     '/_layout/blogs/': {
       id: '/_layout/blogs/'
       path: '/blogs'
@@ -276,19 +269,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutCoursesIndexImport
       parentRoute: typeof LayoutImport
     }
-    '/_layout/profile/': {
-      id: '/_layout/profile/'
+    '/_layout/_protected/admin/': {
+      id: '/_layout/_protected/admin/'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof LayoutProtectedAdminIndexImport
+      parentRoute: typeof LayoutProtectedImport
+    }
+    '/_layout/_protected/profile/': {
+      id: '/_layout/_protected/profile/'
       path: '/profile'
       fullPath: '/profile'
-      preLoaderRoute: typeof LayoutProfileIndexImport
-      parentRoute: typeof LayoutImport
+      preLoaderRoute: typeof LayoutProtectedProfileIndexImport
+      parentRoute: typeof LayoutProtectedImport
     }
   }
 }
 
 // Create and export the route tree
 
+interface LayoutProtectedRouteChildren {
+  LayoutProtectedAdminIndexRoute: typeof LayoutProtectedAdminIndexRoute
+  LayoutProtectedProfileIndexRoute: typeof LayoutProtectedProfileIndexRoute
+}
+
+const LayoutProtectedRouteChildren: LayoutProtectedRouteChildren = {
+  LayoutProtectedAdminIndexRoute: LayoutProtectedAdminIndexRoute,
+  LayoutProtectedProfileIndexRoute: LayoutProtectedProfileIndexRoute,
+}
+
+const LayoutProtectedRouteWithChildren = LayoutProtectedRoute._addFileChildren(
+  LayoutProtectedRouteChildren,
+)
+
 interface LayoutRouteChildren {
+  LayoutProtectedRoute: typeof LayoutProtectedRouteWithChildren
   LayoutAboutRoute: typeof LayoutAboutRoute
   LayoutContactRoute: typeof LayoutContactRoute
   LayoutFeedbackRoute: typeof LayoutFeedbackRoute
@@ -297,13 +312,12 @@ interface LayoutRouteChildren {
   LayoutIndexRoute: typeof LayoutIndexRoute
   LayoutBlogsIdRoute: typeof LayoutBlogsIdRoute
   LayoutCoursesIdRoute: typeof LayoutCoursesIdRoute
-  LayoutAdminIndexRoute: typeof LayoutAdminIndexRoute
   LayoutBlogsIndexRoute: typeof LayoutBlogsIndexRoute
   LayoutCoursesIndexRoute: typeof LayoutCoursesIndexRoute
-  LayoutProfileIndexRoute: typeof LayoutProfileIndexRoute
 }
 
 const LayoutRouteChildren: LayoutRouteChildren = {
+  LayoutProtectedRoute: LayoutProtectedRouteWithChildren,
   LayoutAboutRoute: LayoutAboutRoute,
   LayoutContactRoute: LayoutContactRoute,
   LayoutFeedbackRoute: LayoutFeedbackRoute,
@@ -312,18 +326,15 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutIndexRoute: LayoutIndexRoute,
   LayoutBlogsIdRoute: LayoutBlogsIdRoute,
   LayoutCoursesIdRoute: LayoutCoursesIdRoute,
-  LayoutAdminIndexRoute: LayoutAdminIndexRoute,
   LayoutBlogsIndexRoute: LayoutBlogsIndexRoute,
   LayoutCoursesIndexRoute: LayoutCoursesIndexRoute,
-  LayoutProfileIndexRoute: LayoutProfileIndexRoute,
 }
 
 const LayoutRouteWithChildren =
   LayoutRoute._addFileChildren(LayoutRouteChildren)
 
 export interface FileRoutesByFullPath {
-  '': typeof LayoutRouteWithChildren
-  '/dashboard': typeof DashboardRoute
+  '': typeof LayoutProtectedRouteWithChildren
   '/notfound': typeof NotfoundRoute
   '/about': typeof LayoutAboutRoute
   '/contact': typeof LayoutContactRoute
@@ -337,15 +348,15 @@ export interface FileRoutesByFullPath {
   '/': typeof LayoutIndexRoute
   '/blogs/$id': typeof LayoutBlogsIdRoute
   '/courses/$id': typeof LayoutCoursesIdRoute
-  '/admin': typeof LayoutAdminIndexRoute
   '/blogs': typeof LayoutBlogsIndexRoute
   '/courses': typeof LayoutCoursesIndexRoute
-  '/profile': typeof LayoutProfileIndexRoute
+  '/admin': typeof LayoutProtectedAdminIndexRoute
+  '/profile': typeof LayoutProtectedProfileIndexRoute
 }
 
 export interface FileRoutesByTo {
-  '/dashboard': typeof DashboardRoute
   '/notfound': typeof NotfoundRoute
+  '': typeof LayoutProtectedRouteWithChildren
   '/about': typeof LayoutAboutRoute
   '/contact': typeof LayoutContactRoute
   '/feedback': typeof LayoutFeedbackRoute
@@ -358,17 +369,17 @@ export interface FileRoutesByTo {
   '/': typeof LayoutIndexRoute
   '/blogs/$id': typeof LayoutBlogsIdRoute
   '/courses/$id': typeof LayoutCoursesIdRoute
-  '/admin': typeof LayoutAdminIndexRoute
   '/blogs': typeof LayoutBlogsIndexRoute
   '/courses': typeof LayoutCoursesIndexRoute
-  '/profile': typeof LayoutProfileIndexRoute
+  '/admin': typeof LayoutProtectedAdminIndexRoute
+  '/profile': typeof LayoutProtectedProfileIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/_layout': typeof LayoutRouteWithChildren
-  '/dashboard': typeof DashboardRoute
   '/notfound': typeof NotfoundRoute
+  '/_layout/_protected': typeof LayoutProtectedRouteWithChildren
   '/_layout/about': typeof LayoutAboutRoute
   '/_layout/contact': typeof LayoutContactRoute
   '/_layout/feedback': typeof LayoutFeedbackRoute
@@ -381,17 +392,16 @@ export interface FileRoutesById {
   '/_layout/': typeof LayoutIndexRoute
   '/_layout/blogs/$id': typeof LayoutBlogsIdRoute
   '/_layout/courses/$id': typeof LayoutCoursesIdRoute
-  '/_layout/admin/': typeof LayoutAdminIndexRoute
   '/_layout/blogs/': typeof LayoutBlogsIndexRoute
   '/_layout/courses/': typeof LayoutCoursesIndexRoute
-  '/_layout/profile/': typeof LayoutProfileIndexRoute
+  '/_layout/_protected/admin/': typeof LayoutProtectedAdminIndexRoute
+  '/_layout/_protected/profile/': typeof LayoutProtectedProfileIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | ''
-    | '/dashboard'
     | '/notfound'
     | '/about'
     | '/contact'
@@ -405,14 +415,14 @@ export interface FileRouteTypes {
     | '/'
     | '/blogs/$id'
     | '/courses/$id'
-    | '/admin'
     | '/blogs'
     | '/courses'
+    | '/admin'
     | '/profile'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/dashboard'
     | '/notfound'
+    | ''
     | '/about'
     | '/contact'
     | '/feedback'
@@ -425,15 +435,15 @@ export interface FileRouteTypes {
     | '/'
     | '/blogs/$id'
     | '/courses/$id'
-    | '/admin'
     | '/blogs'
     | '/courses'
+    | '/admin'
     | '/profile'
   id:
     | '__root__'
     | '/_layout'
-    | '/dashboard'
     | '/notfound'
+    | '/_layout/_protected'
     | '/_layout/about'
     | '/_layout/contact'
     | '/_layout/feedback'
@@ -446,16 +456,15 @@ export interface FileRouteTypes {
     | '/_layout/'
     | '/_layout/blogs/$id'
     | '/_layout/courses/$id'
-    | '/_layout/admin/'
     | '/_layout/blogs/'
     | '/_layout/courses/'
-    | '/_layout/profile/'
+    | '/_layout/_protected/admin/'
+    | '/_layout/_protected/profile/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   LayoutRoute: typeof LayoutRouteWithChildren
-  DashboardRoute: typeof DashboardRoute
   NotfoundRoute: typeof NotfoundRoute
   AuthForgotPasswordRoute: typeof AuthForgotPasswordRoute
   AuthLoginRoute: typeof AuthLoginRoute
@@ -465,7 +474,6 @@ export interface RootRouteChildren {
 
 const rootRouteChildren: RootRouteChildren = {
   LayoutRoute: LayoutRouteWithChildren,
-  DashboardRoute: DashboardRoute,
   NotfoundRoute: NotfoundRoute,
   AuthForgotPasswordRoute: AuthForgotPasswordRoute,
   AuthLoginRoute: AuthLoginRoute,
@@ -484,7 +492,6 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/_layout",
-        "/dashboard",
         "/notfound",
         "/auth/forgot-password",
         "/auth/login",
@@ -495,6 +502,7 @@ export const routeTree = rootRoute
     "/_layout": {
       "filePath": "_layout.tsx",
       "children": [
+        "/_layout/_protected",
         "/_layout/about",
         "/_layout/contact",
         "/_layout/feedback",
@@ -503,17 +511,20 @@ export const routeTree = rootRoute
         "/_layout/",
         "/_layout/blogs/$id",
         "/_layout/courses/$id",
-        "/_layout/admin/",
         "/_layout/blogs/",
-        "/_layout/courses/",
-        "/_layout/profile/"
+        "/_layout/courses/"
       ]
-    },
-    "/dashboard": {
-      "filePath": "dashboard.tsx"
     },
     "/notfound": {
       "filePath": "notfound.tsx"
+    },
+    "/_layout/_protected": {
+      "filePath": "_layout/_protected.tsx",
+      "parent": "/_layout",
+      "children": [
+        "/_layout/_protected/admin/",
+        "/_layout/_protected/profile/"
+      ]
     },
     "/_layout/about": {
       "filePath": "_layout/about.tsx",
@@ -559,10 +570,6 @@ export const routeTree = rootRoute
       "filePath": "_layout/courses/$id.tsx",
       "parent": "/_layout"
     },
-    "/_layout/admin/": {
-      "filePath": "_layout/admin/index.tsx",
-      "parent": "/_layout"
-    },
     "/_layout/blogs/": {
       "filePath": "_layout/blogs/index.tsx",
       "parent": "/_layout"
@@ -571,9 +578,13 @@ export const routeTree = rootRoute
       "filePath": "_layout/courses/index.tsx",
       "parent": "/_layout"
     },
-    "/_layout/profile/": {
-      "filePath": "_layout/profile/index.tsx",
-      "parent": "/_layout"
+    "/_layout/_protected/admin/": {
+      "filePath": "_layout/_protected/admin/index.tsx",
+      "parent": "/_layout/_protected"
+    },
+    "/_layout/_protected/profile/": {
+      "filePath": "_layout/_protected/profile/index.tsx",
+      "parent": "/_layout/_protected"
     }
   }
 }

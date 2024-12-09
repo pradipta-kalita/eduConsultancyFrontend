@@ -1,9 +1,10 @@
-import {axiosInstance} from "@/utils/axiosInstance.tsx";
-import {AxiosError} from "axios";
-
+import axios from "@/utils/axiosInstance";
+import axiosLib, {AxiosError} from "axios";
+import {Post} from "@/service/types";
 export const fetchBlogs = async (page: number) => {
+
     try {
-        const response = await axiosInstance.get(`/blogs?page=${page}`);
+        const response = await axios.get(`/blogs?page=${page}&order=desc`);
         return response.data;
     } catch (error) {
         if (error instanceof AxiosError) {
@@ -14,7 +15,17 @@ export const fetchBlogs = async (page: number) => {
     }
 };
 
+export const blogQueryOptions = (blogId: string): { queryKey: string[]; queryFn: () => Promise<Post> } => ({
+    queryKey: ['blogs', blogId],
+    queryFn: async () => {
+        const response = await axios.get(`/blogs/${blogId}`);
+        if (!response.data) {
+            throw new Error(`Post with ID ${blogId} not found`);
+        }
+        return response.data;
+    },
+});
 
-export const fetchBlog = (blogId:string) => {
-    return axiosInstance.get(`/blogs/${blogId}`);
+export const fetchBlog:(blogId: string) => Promise<axiosLib.AxiosResponse<Post>> = (blogId:string) => {
+    return axios.get(`/blogs/${blogId}`);
 }
