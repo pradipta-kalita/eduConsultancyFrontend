@@ -13,6 +13,7 @@
 import { Route as rootRoute } from './routes/__root'
 import { Route as NotfoundImport } from './routes/notfound'
 import { Route as LayoutImport } from './routes/_layout'
+import { Route as AdminImport } from './routes/_admin'
 import { Route as LayoutIndexImport } from './routes/_layout/index'
 import { Route as AuthVerifyOtpImport } from './routes/auth/verify-otp'
 import { Route as AuthSignupImport } from './routes/auth/signup'
@@ -23,13 +24,19 @@ import { Route as LayoutPrivacyPolicyImport } from './routes/_layout/privacy-pol
 import { Route as LayoutFeedbackImport } from './routes/_layout/feedback'
 import { Route as LayoutContactImport } from './routes/_layout/contact'
 import { Route as LayoutAboutImport } from './routes/_layout/about'
+import { Route as LayoutUserImport } from './routes/_layout/_user'
 import { Route as LayoutProtectedImport } from './routes/_layout/_protected'
 import { Route as LayoutCoursesIndexImport } from './routes/_layout/courses/index'
 import { Route as LayoutBlogsIndexImport } from './routes/_layout/blogs/index'
+import { Route as AdminAdminIndexImport } from './routes/_admin/admin/index'
 import { Route as LayoutCoursesIdImport } from './routes/_layout/courses/$id'
 import { Route as LayoutBlogsIdImport } from './routes/_layout/blogs/$id'
-import { Route as LayoutProtectedProfileIndexImport } from './routes/_layout/_protected/profile/index'
-import { Route as LayoutProtectedAdminIndexImport } from './routes/_layout/_protected/admin/index'
+import { Route as AdminAdminSettingsImport } from './routes/_admin/admin/settings'
+import { Route as AdminAdminSearchImport } from './routes/_admin/admin/search'
+import { Route as AdminAdminInboxImport } from './routes/_admin/admin/inbox'
+import { Route as AdminAdminDashboardImport } from './routes/_admin/admin/dashboard'
+import { Route as AdminAdminCalenderImport } from './routes/_admin/admin/calender'
+import { Route as LayoutUserProfileIndexImport } from './routes/_layout/_user/profile/index'
 
 // Create/Update Routes
 
@@ -41,6 +48,11 @@ const NotfoundRoute = NotfoundImport.update({
 
 const LayoutRoute = LayoutImport.update({
   id: '/_layout',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AdminRoute = AdminImport.update({
+  id: '/_admin',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -104,6 +116,11 @@ const LayoutAboutRoute = LayoutAboutImport.update({
   getParentRoute: () => LayoutRoute,
 } as any)
 
+const LayoutUserRoute = LayoutUserImport.update({
+  id: '/_user',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
 const LayoutProtectedRoute = LayoutProtectedImport.update({
   id: '/_protected',
   getParentRoute: () => LayoutRoute,
@@ -121,6 +138,12 @@ const LayoutBlogsIndexRoute = LayoutBlogsIndexImport.update({
   getParentRoute: () => LayoutRoute,
 } as any)
 
+const AdminAdminIndexRoute = AdminAdminIndexImport.update({
+  id: '/admin/',
+  path: '/admin/',
+  getParentRoute: () => AdminRoute,
+} as any)
+
 const LayoutCoursesIdRoute = LayoutCoursesIdImport.update({
   id: '/courses/$id',
   path: '/courses/$id',
@@ -133,23 +156,53 @@ const LayoutBlogsIdRoute = LayoutBlogsIdImport.update({
   getParentRoute: () => LayoutRoute,
 } as any)
 
-const LayoutProtectedProfileIndexRoute =
-  LayoutProtectedProfileIndexImport.update({
-    id: '/profile/',
-    path: '/profile/',
-    getParentRoute: () => LayoutProtectedRoute,
-  } as any)
+const AdminAdminSettingsRoute = AdminAdminSettingsImport.update({
+  id: '/admin/settings',
+  path: '/admin/settings',
+  getParentRoute: () => AdminRoute,
+} as any)
 
-const LayoutProtectedAdminIndexRoute = LayoutProtectedAdminIndexImport.update({
-  id: '/admin/',
-  path: '/admin/',
-  getParentRoute: () => LayoutProtectedRoute,
+const AdminAdminSearchRoute = AdminAdminSearchImport.update({
+  id: '/admin/search',
+  path: '/admin/search',
+  getParentRoute: () => AdminRoute,
+} as any)
+
+const AdminAdminInboxRoute = AdminAdminInboxImport.update({
+  id: '/admin/inbox',
+  path: '/admin/inbox',
+  getParentRoute: () => AdminRoute,
+} as any)
+
+const AdminAdminDashboardRoute = AdminAdminDashboardImport.update({
+  id: '/admin/dashboard',
+  path: '/admin/dashboard',
+  getParentRoute: () => AdminRoute,
+} as any)
+
+const AdminAdminCalenderRoute = AdminAdminCalenderImport.update({
+  id: '/admin/calender',
+  path: '/admin/calender',
+  getParentRoute: () => AdminRoute,
+} as any)
+
+const LayoutUserProfileIndexRoute = LayoutUserProfileIndexImport.update({
+  id: '/profile/',
+  path: '/profile/',
+  getParentRoute: () => LayoutUserRoute,
 } as any)
 
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/_admin': {
+      id: '/_admin'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AdminImport
+      parentRoute: typeof rootRoute
+    }
     '/_layout': {
       id: '/_layout'
       path: ''
@@ -169,6 +222,13 @@ declare module '@tanstack/react-router' {
       path: ''
       fullPath: ''
       preLoaderRoute: typeof LayoutProtectedImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/_user': {
+      id: '/_layout/_user'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof LayoutUserImport
       parentRoute: typeof LayoutImport
     }
     '/_layout/about': {
@@ -241,6 +301,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutIndexImport
       parentRoute: typeof LayoutImport
     }
+    '/_admin/admin/calender': {
+      id: '/_admin/admin/calender'
+      path: '/admin/calender'
+      fullPath: '/admin/calender'
+      preLoaderRoute: typeof AdminAdminCalenderImport
+      parentRoute: typeof AdminImport
+    }
+    '/_admin/admin/dashboard': {
+      id: '/_admin/admin/dashboard'
+      path: '/admin/dashboard'
+      fullPath: '/admin/dashboard'
+      preLoaderRoute: typeof AdminAdminDashboardImport
+      parentRoute: typeof AdminImport
+    }
+    '/_admin/admin/inbox': {
+      id: '/_admin/admin/inbox'
+      path: '/admin/inbox'
+      fullPath: '/admin/inbox'
+      preLoaderRoute: typeof AdminAdminInboxImport
+      parentRoute: typeof AdminImport
+    }
+    '/_admin/admin/search': {
+      id: '/_admin/admin/search'
+      path: '/admin/search'
+      fullPath: '/admin/search'
+      preLoaderRoute: typeof AdminAdminSearchImport
+      parentRoute: typeof AdminImport
+    }
+    '/_admin/admin/settings': {
+      id: '/_admin/admin/settings'
+      path: '/admin/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AdminAdminSettingsImport
+      parentRoute: typeof AdminImport
+    }
     '/_layout/blogs/$id': {
       id: '/_layout/blogs/$id'
       path: '/blogs/$id'
@@ -254,6 +349,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/courses/$id'
       preLoaderRoute: typeof LayoutCoursesIdImport
       parentRoute: typeof LayoutImport
+    }
+    '/_admin/admin/': {
+      id: '/_admin/admin/'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminAdminIndexImport
+      parentRoute: typeof AdminImport
     }
     '/_layout/blogs/': {
       id: '/_layout/blogs/'
@@ -269,41 +371,53 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutCoursesIndexImport
       parentRoute: typeof LayoutImport
     }
-    '/_layout/_protected/admin/': {
-      id: '/_layout/_protected/admin/'
-      path: '/admin'
-      fullPath: '/admin'
-      preLoaderRoute: typeof LayoutProtectedAdminIndexImport
-      parentRoute: typeof LayoutProtectedImport
-    }
-    '/_layout/_protected/profile/': {
-      id: '/_layout/_protected/profile/'
+    '/_layout/_user/profile/': {
+      id: '/_layout/_user/profile/'
       path: '/profile'
       fullPath: '/profile'
-      preLoaderRoute: typeof LayoutProtectedProfileIndexImport
-      parentRoute: typeof LayoutProtectedImport
+      preLoaderRoute: typeof LayoutUserProfileIndexImport
+      parentRoute: typeof LayoutUserImport
     }
   }
 }
 
 // Create and export the route tree
 
-interface LayoutProtectedRouteChildren {
-  LayoutProtectedAdminIndexRoute: typeof LayoutProtectedAdminIndexRoute
-  LayoutProtectedProfileIndexRoute: typeof LayoutProtectedProfileIndexRoute
+interface AdminRouteChildren {
+  AdminAdminCalenderRoute: typeof AdminAdminCalenderRoute
+  AdminAdminDashboardRoute: typeof AdminAdminDashboardRoute
+  AdminAdminInboxRoute: typeof AdminAdminInboxRoute
+  AdminAdminSearchRoute: typeof AdminAdminSearchRoute
+  AdminAdminSettingsRoute: typeof AdminAdminSettingsRoute
+  AdminAdminIndexRoute: typeof AdminAdminIndexRoute
 }
 
-const LayoutProtectedRouteChildren: LayoutProtectedRouteChildren = {
-  LayoutProtectedAdminIndexRoute: LayoutProtectedAdminIndexRoute,
-  LayoutProtectedProfileIndexRoute: LayoutProtectedProfileIndexRoute,
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminAdminCalenderRoute: AdminAdminCalenderRoute,
+  AdminAdminDashboardRoute: AdminAdminDashboardRoute,
+  AdminAdminInboxRoute: AdminAdminInboxRoute,
+  AdminAdminSearchRoute: AdminAdminSearchRoute,
+  AdminAdminSettingsRoute: AdminAdminSettingsRoute,
+  AdminAdminIndexRoute: AdminAdminIndexRoute,
 }
 
-const LayoutProtectedRouteWithChildren = LayoutProtectedRoute._addFileChildren(
-  LayoutProtectedRouteChildren,
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
+interface LayoutUserRouteChildren {
+  LayoutUserProfileIndexRoute: typeof LayoutUserProfileIndexRoute
+}
+
+const LayoutUserRouteChildren: LayoutUserRouteChildren = {
+  LayoutUserProfileIndexRoute: LayoutUserProfileIndexRoute,
+}
+
+const LayoutUserRouteWithChildren = LayoutUserRoute._addFileChildren(
+  LayoutUserRouteChildren,
 )
 
 interface LayoutRouteChildren {
-  LayoutProtectedRoute: typeof LayoutProtectedRouteWithChildren
+  LayoutProtectedRoute: typeof LayoutProtectedRoute
+  LayoutUserRoute: typeof LayoutUserRouteWithChildren
   LayoutAboutRoute: typeof LayoutAboutRoute
   LayoutContactRoute: typeof LayoutContactRoute
   LayoutFeedbackRoute: typeof LayoutFeedbackRoute
@@ -317,7 +431,8 @@ interface LayoutRouteChildren {
 }
 
 const LayoutRouteChildren: LayoutRouteChildren = {
-  LayoutProtectedRoute: LayoutProtectedRouteWithChildren,
+  LayoutProtectedRoute: LayoutProtectedRoute,
+  LayoutUserRoute: LayoutUserRouteWithChildren,
   LayoutAboutRoute: LayoutAboutRoute,
   LayoutContactRoute: LayoutContactRoute,
   LayoutFeedbackRoute: LayoutFeedbackRoute,
@@ -334,7 +449,7 @@ const LayoutRouteWithChildren =
   LayoutRoute._addFileChildren(LayoutRouteChildren)
 
 export interface FileRoutesByFullPath {
-  '': typeof LayoutProtectedRouteWithChildren
+  '': typeof LayoutUserRouteWithChildren
   '/notfound': typeof NotfoundRoute
   '/about': typeof LayoutAboutRoute
   '/contact': typeof LayoutContactRoute
@@ -346,17 +461,22 @@ export interface FileRoutesByFullPath {
   '/auth/signup': typeof AuthSignupRoute
   '/auth/verify-otp': typeof AuthVerifyOtpRoute
   '/': typeof LayoutIndexRoute
+  '/admin/calender': typeof AdminAdminCalenderRoute
+  '/admin/dashboard': typeof AdminAdminDashboardRoute
+  '/admin/inbox': typeof AdminAdminInboxRoute
+  '/admin/search': typeof AdminAdminSearchRoute
+  '/admin/settings': typeof AdminAdminSettingsRoute
   '/blogs/$id': typeof LayoutBlogsIdRoute
   '/courses/$id': typeof LayoutCoursesIdRoute
+  '/admin': typeof AdminAdminIndexRoute
   '/blogs': typeof LayoutBlogsIndexRoute
   '/courses': typeof LayoutCoursesIndexRoute
-  '/admin': typeof LayoutProtectedAdminIndexRoute
-  '/profile': typeof LayoutProtectedProfileIndexRoute
+  '/profile': typeof LayoutUserProfileIndexRoute
 }
 
 export interface FileRoutesByTo {
+  '': typeof LayoutUserRouteWithChildren
   '/notfound': typeof NotfoundRoute
-  '': typeof LayoutProtectedRouteWithChildren
   '/about': typeof LayoutAboutRoute
   '/contact': typeof LayoutContactRoute
   '/feedback': typeof LayoutFeedbackRoute
@@ -367,19 +487,26 @@ export interface FileRoutesByTo {
   '/auth/signup': typeof AuthSignupRoute
   '/auth/verify-otp': typeof AuthVerifyOtpRoute
   '/': typeof LayoutIndexRoute
+  '/admin/calender': typeof AdminAdminCalenderRoute
+  '/admin/dashboard': typeof AdminAdminDashboardRoute
+  '/admin/inbox': typeof AdminAdminInboxRoute
+  '/admin/search': typeof AdminAdminSearchRoute
+  '/admin/settings': typeof AdminAdminSettingsRoute
   '/blogs/$id': typeof LayoutBlogsIdRoute
   '/courses/$id': typeof LayoutCoursesIdRoute
+  '/admin': typeof AdminAdminIndexRoute
   '/blogs': typeof LayoutBlogsIndexRoute
   '/courses': typeof LayoutCoursesIndexRoute
-  '/admin': typeof LayoutProtectedAdminIndexRoute
-  '/profile': typeof LayoutProtectedProfileIndexRoute
+  '/profile': typeof LayoutUserProfileIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
+  '/_admin': typeof AdminRouteWithChildren
   '/_layout': typeof LayoutRouteWithChildren
   '/notfound': typeof NotfoundRoute
-  '/_layout/_protected': typeof LayoutProtectedRouteWithChildren
+  '/_layout/_protected': typeof LayoutProtectedRoute
+  '/_layout/_user': typeof LayoutUserRouteWithChildren
   '/_layout/about': typeof LayoutAboutRoute
   '/_layout/contact': typeof LayoutContactRoute
   '/_layout/feedback': typeof LayoutFeedbackRoute
@@ -390,12 +517,17 @@ export interface FileRoutesById {
   '/auth/signup': typeof AuthSignupRoute
   '/auth/verify-otp': typeof AuthVerifyOtpRoute
   '/_layout/': typeof LayoutIndexRoute
+  '/_admin/admin/calender': typeof AdminAdminCalenderRoute
+  '/_admin/admin/dashboard': typeof AdminAdminDashboardRoute
+  '/_admin/admin/inbox': typeof AdminAdminInboxRoute
+  '/_admin/admin/search': typeof AdminAdminSearchRoute
+  '/_admin/admin/settings': typeof AdminAdminSettingsRoute
   '/_layout/blogs/$id': typeof LayoutBlogsIdRoute
   '/_layout/courses/$id': typeof LayoutCoursesIdRoute
+  '/_admin/admin/': typeof AdminAdminIndexRoute
   '/_layout/blogs/': typeof LayoutBlogsIndexRoute
   '/_layout/courses/': typeof LayoutCoursesIndexRoute
-  '/_layout/_protected/admin/': typeof LayoutProtectedAdminIndexRoute
-  '/_layout/_protected/profile/': typeof LayoutProtectedProfileIndexRoute
+  '/_layout/_user/profile/': typeof LayoutUserProfileIndexRoute
 }
 
 export interface FileRouteTypes {
@@ -413,16 +545,21 @@ export interface FileRouteTypes {
     | '/auth/signup'
     | '/auth/verify-otp'
     | '/'
+    | '/admin/calender'
+    | '/admin/dashboard'
+    | '/admin/inbox'
+    | '/admin/search'
+    | '/admin/settings'
     | '/blogs/$id'
     | '/courses/$id'
+    | '/admin'
     | '/blogs'
     | '/courses'
-    | '/admin'
     | '/profile'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/notfound'
     | ''
+    | '/notfound'
     | '/about'
     | '/contact'
     | '/feedback'
@@ -433,17 +570,24 @@ export interface FileRouteTypes {
     | '/auth/signup'
     | '/auth/verify-otp'
     | '/'
+    | '/admin/calender'
+    | '/admin/dashboard'
+    | '/admin/inbox'
+    | '/admin/search'
+    | '/admin/settings'
     | '/blogs/$id'
     | '/courses/$id'
+    | '/admin'
     | '/blogs'
     | '/courses'
-    | '/admin'
     | '/profile'
   id:
     | '__root__'
+    | '/_admin'
     | '/_layout'
     | '/notfound'
     | '/_layout/_protected'
+    | '/_layout/_user'
     | '/_layout/about'
     | '/_layout/contact'
     | '/_layout/feedback'
@@ -454,16 +598,22 @@ export interface FileRouteTypes {
     | '/auth/signup'
     | '/auth/verify-otp'
     | '/_layout/'
+    | '/_admin/admin/calender'
+    | '/_admin/admin/dashboard'
+    | '/_admin/admin/inbox'
+    | '/_admin/admin/search'
+    | '/_admin/admin/settings'
     | '/_layout/blogs/$id'
     | '/_layout/courses/$id'
+    | '/_admin/admin/'
     | '/_layout/blogs/'
     | '/_layout/courses/'
-    | '/_layout/_protected/admin/'
-    | '/_layout/_protected/profile/'
+    | '/_layout/_user/profile/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
+  AdminRoute: typeof AdminRouteWithChildren
   LayoutRoute: typeof LayoutRouteWithChildren
   NotfoundRoute: typeof NotfoundRoute
   AuthForgotPasswordRoute: typeof AuthForgotPasswordRoute
@@ -473,6 +623,7 @@ export interface RootRouteChildren {
 }
 
 const rootRouteChildren: RootRouteChildren = {
+  AdminRoute: AdminRouteWithChildren,
   LayoutRoute: LayoutRouteWithChildren,
   NotfoundRoute: NotfoundRoute,
   AuthForgotPasswordRoute: AuthForgotPasswordRoute,
@@ -491,6 +642,7 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
+        "/_admin",
         "/_layout",
         "/notfound",
         "/auth/forgot-password",
@@ -499,10 +651,22 @@ export const routeTree = rootRoute
         "/auth/verify-otp"
       ]
     },
+    "/_admin": {
+      "filePath": "_admin.tsx",
+      "children": [
+        "/_admin/admin/calender",
+        "/_admin/admin/dashboard",
+        "/_admin/admin/inbox",
+        "/_admin/admin/search",
+        "/_admin/admin/settings",
+        "/_admin/admin/"
+      ]
+    },
     "/_layout": {
       "filePath": "_layout.tsx",
       "children": [
         "/_layout/_protected",
+        "/_layout/_user",
         "/_layout/about",
         "/_layout/contact",
         "/_layout/feedback",
@@ -520,10 +684,13 @@ export const routeTree = rootRoute
     },
     "/_layout/_protected": {
       "filePath": "_layout/_protected.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/_user": {
+      "filePath": "_layout/_user.tsx",
       "parent": "/_layout",
       "children": [
-        "/_layout/_protected/admin/",
-        "/_layout/_protected/profile/"
+        "/_layout/_user/profile/"
       ]
     },
     "/_layout/about": {
@@ -562,6 +729,26 @@ export const routeTree = rootRoute
       "filePath": "_layout/index.tsx",
       "parent": "/_layout"
     },
+    "/_admin/admin/calender": {
+      "filePath": "_admin/admin/calender.tsx",
+      "parent": "/_admin"
+    },
+    "/_admin/admin/dashboard": {
+      "filePath": "_admin/admin/dashboard.tsx",
+      "parent": "/_admin"
+    },
+    "/_admin/admin/inbox": {
+      "filePath": "_admin/admin/inbox.tsx",
+      "parent": "/_admin"
+    },
+    "/_admin/admin/search": {
+      "filePath": "_admin/admin/search.tsx",
+      "parent": "/_admin"
+    },
+    "/_admin/admin/settings": {
+      "filePath": "_admin/admin/settings.tsx",
+      "parent": "/_admin"
+    },
     "/_layout/blogs/$id": {
       "filePath": "_layout/blogs/$id.tsx",
       "parent": "/_layout"
@@ -569,6 +756,10 @@ export const routeTree = rootRoute
     "/_layout/courses/$id": {
       "filePath": "_layout/courses/$id.tsx",
       "parent": "/_layout"
+    },
+    "/_admin/admin/": {
+      "filePath": "_admin/admin/index.tsx",
+      "parent": "/_admin"
     },
     "/_layout/blogs/": {
       "filePath": "_layout/blogs/index.tsx",
@@ -578,13 +769,9 @@ export const routeTree = rootRoute
       "filePath": "_layout/courses/index.tsx",
       "parent": "/_layout"
     },
-    "/_layout/_protected/admin/": {
-      "filePath": "_layout/_protected/admin/index.tsx",
-      "parent": "/_layout/_protected"
-    },
-    "/_layout/_protected/profile/": {
-      "filePath": "_layout/_protected/profile/index.tsx",
-      "parent": "/_layout/_protected"
+    "/_layout/_user/profile/": {
+      "filePath": "_layout/_user/profile/index.tsx",
+      "parent": "/_layout/_user"
     }
   }
 }
