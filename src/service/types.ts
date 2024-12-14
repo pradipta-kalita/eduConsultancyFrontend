@@ -6,6 +6,7 @@ export interface Post {
     content: string;
 }
 
+// TODO: add published_at or created_at, status,
 export interface CourseSummary {
     id:string;
     title:string;
@@ -20,7 +21,7 @@ export interface Course {
     description:string;
     summary:string;
     instructor:string;
-    instrcutorId:string;
+    instructorId:string;
     price:number;
     category: CourseCategory
 }
