@@ -47,19 +47,16 @@ function RouteComponent() {
   }
 
   return (
-    <SidebarProvider>
-      <div className="flex h-screen ">
-        <AppSidebar />
+      <div className="flex flex-col min-h-screen h-full">
+        <SidebarProvider>
+          <AppSidebar/>
 
-        {/* Main content area */}
-        <div className="flex-1 p-4">
-          {/* Sidebar toggle button */}
-          <SidebarTrigger />
-          {/* Child routes will be rendered here */}
-          <Outlet />
-        </div>
-
+          <div className="p-4 flex-grow bg-gradient-to-r from-gray-50 via-gray-100 to-gray-50 min-h-screen">
+            <SidebarTrigger/>
+            <Outlet/>
+          </div>
+        </SidebarProvider>
       </div>
-    </SidebarProvider>
+
   );
 }

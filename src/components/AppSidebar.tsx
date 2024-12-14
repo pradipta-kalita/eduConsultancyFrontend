@@ -10,7 +10,7 @@ import {
   SidebarMenuButton, 
   SidebarMenuItem, 
   useSidebar } from "./ui/sidebar";
-  import { Home, Inbox, Calendar, Search, Settings, LogOut,SquarePen,Tag,GraduationCap,Folder, MessageCircle, Phone,School2, UserCircle } from "lucide-react";
+  import { Home, Inbox, Calendar, Search, Settings, LogOut,SquarePen,Tag,GraduationCap,Folder, MessageCircle, Phone,School2 } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { Button } from "./ui/button";
 import { useAuth } from "@/auth/authContext";
@@ -20,7 +20,7 @@ const sidebarData = [
   {
     label: "Contents",
     items: [
-      { to: "/admin/dashboard", icon: Home, label: "Home" },
+      { to: "/admin/dashboard", icon: Home, label: "Dashboard" },
       { to: "/admin/inbox", icon: Inbox, label: "Inbox" },
       { to: "/admin/calendar", icon: Calendar, label: "Calendar" },
       { to: "/admin/search", icon: Search, label: "Search" },
@@ -55,15 +55,13 @@ export default function AppSidebar() {
   const { open } = useSidebar();
 
   return (
-    <Sidebar className={`fixed top-0 left-0 h-screen shadow-lg bg-gray-900 text-black transition-transform ${
-      open ? "translate-x-0" : "-translate-x-full"
-    } sm:translate-x-0 sm:w-64 w-64`}>
+    <Sidebar collapsible={"icon"}>
       {/* Sidebar Header */}
-      <SidebarHeader className="p-4 flex items-center justify-between">
+      <SidebarHeader className="p-4 flex items-center justify-between bg-gradient-to-b from-gray-50 via-gray-100 to-gray-50">
       <h1 className="text-xl text-gray-800 font-bold flex items-center space-x-2">
         <span className="inline-block align-middle">
           <School2 className="h-4 w-4" /></span>
-        <span>EduConsultancy</span>
+        {open ? <span>EduConsultancy</span>:null}
       </h1>
 
         {/* Optional collapsible toggle button */}
@@ -76,7 +74,7 @@ export default function AppSidebar() {
       </SidebarHeader>
 
       {/* Sidebar Content */}
-      <SidebarContent className="flex-1 overflow-y-auto">
+      <SidebarContent className="flex-1 overflow-y-auto bg-gradient-to-b from-gray-50 via-gray-100 to-gray-50">
         {
           sidebarData.map(group=>{
             return (
@@ -114,13 +112,13 @@ export default function AppSidebar() {
       </SidebarContent>
 
       {/* Sidebar Footer */}
-      <SidebarFooter className="sticky">
+      <SidebarFooter className="sticky bg-gradient-to-b from-gray-50 via-gray-100 to-gray-50">
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton asChild className="flex items-center hover:bg-gray-100 gap-3">
+            <SidebarMenuButton asChild className="flex items-center hover:bg-gray-200 gap-3">
               <Button onClick={logout} variant={'ghost'} className="p-5 text-gray-800 text-md border border-gray-300">
                 <LogOut className="h-4 w-4"/>
-                Sign out
+                {open?`Sign out`:""}
               </Button>
             </SidebarMenuButton>
           </SidebarMenuItem>

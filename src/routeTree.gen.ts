@@ -37,6 +37,7 @@ import { Route as AdminAdminInboxImport } from './routes/_admin/admin/inbox'
 import { Route as AdminAdminDashboardImport } from './routes/_admin/admin/dashboard'
 import { Route as AdminAdminCalenderImport } from './routes/_admin/admin/calender'
 import { Route as LayoutUserProfileIndexImport } from './routes/_layout/_user/profile/index'
+import { Route as AdminAdminCoursesIndexImport } from './routes/_admin/admin/courses/index'
 
 // Create/Update Routes
 
@@ -190,6 +191,12 @@ const LayoutUserProfileIndexRoute = LayoutUserProfileIndexImport.update({
   id: '/profile/',
   path: '/profile/',
   getParentRoute: () => LayoutUserRoute,
+} as any)
+
+const AdminAdminCoursesIndexRoute = AdminAdminCoursesIndexImport.update({
+  id: '/admin/courses/',
+  path: '/admin/courses/',
+  getParentRoute: () => AdminRoute,
 } as any)
 
 // Populate the FileRoutesByPath interface
@@ -371,6 +378,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutCoursesIndexImport
       parentRoute: typeof LayoutImport
     }
+    '/_admin/admin/courses/': {
+      id: '/_admin/admin/courses/'
+      path: '/admin/courses'
+      fullPath: '/admin/courses'
+      preLoaderRoute: typeof AdminAdminCoursesIndexImport
+      parentRoute: typeof AdminImport
+    }
     '/_layout/_user/profile/': {
       id: '/_layout/_user/profile/'
       path: '/profile'
@@ -390,6 +404,7 @@ interface AdminRouteChildren {
   AdminAdminSearchRoute: typeof AdminAdminSearchRoute
   AdminAdminSettingsRoute: typeof AdminAdminSettingsRoute
   AdminAdminIndexRoute: typeof AdminAdminIndexRoute
+  AdminAdminCoursesIndexRoute: typeof AdminAdminCoursesIndexRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
@@ -399,6 +414,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminAdminSearchRoute: AdminAdminSearchRoute,
   AdminAdminSettingsRoute: AdminAdminSettingsRoute,
   AdminAdminIndexRoute: AdminAdminIndexRoute,
+  AdminAdminCoursesIndexRoute: AdminAdminCoursesIndexRoute,
 }
 
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
@@ -471,6 +487,7 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AdminAdminIndexRoute
   '/blogs': typeof LayoutBlogsIndexRoute
   '/courses': typeof LayoutCoursesIndexRoute
+  '/admin/courses': typeof AdminAdminCoursesIndexRoute
   '/profile': typeof LayoutUserProfileIndexRoute
 }
 
@@ -497,6 +514,7 @@ export interface FileRoutesByTo {
   '/admin': typeof AdminAdminIndexRoute
   '/blogs': typeof LayoutBlogsIndexRoute
   '/courses': typeof LayoutCoursesIndexRoute
+  '/admin/courses': typeof AdminAdminCoursesIndexRoute
   '/profile': typeof LayoutUserProfileIndexRoute
 }
 
@@ -527,6 +545,7 @@ export interface FileRoutesById {
   '/_admin/admin/': typeof AdminAdminIndexRoute
   '/_layout/blogs/': typeof LayoutBlogsIndexRoute
   '/_layout/courses/': typeof LayoutCoursesIndexRoute
+  '/_admin/admin/courses/': typeof AdminAdminCoursesIndexRoute
   '/_layout/_user/profile/': typeof LayoutUserProfileIndexRoute
 }
 
@@ -555,6 +574,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/blogs'
     | '/courses'
+    | '/admin/courses'
     | '/profile'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -580,6 +600,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/blogs'
     | '/courses'
+    | '/admin/courses'
     | '/profile'
   id:
     | '__root__'
@@ -608,6 +629,7 @@ export interface FileRouteTypes {
     | '/_admin/admin/'
     | '/_layout/blogs/'
     | '/_layout/courses/'
+    | '/_admin/admin/courses/'
     | '/_layout/_user/profile/'
   fileRoutesById: FileRoutesById
 }
@@ -659,7 +681,8 @@ export const routeTree = rootRoute
         "/_admin/admin/inbox",
         "/_admin/admin/search",
         "/_admin/admin/settings",
-        "/_admin/admin/"
+        "/_admin/admin/",
+        "/_admin/admin/courses/"
       ]
     },
     "/_layout": {
@@ -768,6 +791,10 @@ export const routeTree = rootRoute
     "/_layout/courses/": {
       "filePath": "_layout/courses/index.tsx",
       "parent": "/_layout"
+    },
+    "/_admin/admin/courses/": {
+      "filePath": "_admin/admin/courses/index.tsx",
+      "parent": "/_admin"
     },
     "/_layout/_user/profile/": {
       "filePath": "_layout/_user/profile/index.tsx",
