@@ -11,7 +11,6 @@ import {
 import {
     Tooltip,
     TooltipContent,
-    TooltipProvider,
     TooltipTrigger,
 } from "@/components/ui/tooltip"
 
@@ -120,18 +119,34 @@ const CoursesList: React.FC = () => {
                                 </TableCell>
                                 <TableCell className="text-right">
                                     <div className="flex justify-end items-center space-x-2">
-                                        <button
-                                            className="text-blue-600 hover:text-blue-800 p-1 rounded-md transition-all duration-200"
-                                            aria-label="Edit course"
-                                        >
-                                            <Edit size={20} />
-                                        </button>
-                                        <button
-                                            className="text-red-600 hover:text-red-800 p-1 rounded-md transition-all duration-200"
-                                            aria-label="Delete course"
-                                        >
-                                            <Trash2 size={20} />
-                                        </button>
+                                        <Tooltip>
+                                            <TooltipTrigger>
+                                                <button
+                                                    className="text-blue-600 hover:text-blue-800 p-1 rounded-md transition-all duration-200"
+                                                    aria-label="Edit course"
+                                                >
+                                                    <Edit size={20}/>
+                                                </button>
+                                            </TooltipTrigger>
+                                            <TooltipContent>
+                                                Edit
+                                            </TooltipContent>
+                                        </Tooltip>
+                                        <Tooltip>
+                                            <TooltipTrigger>
+                                                <button
+                                                    className="text-red-600 hover:text-red-800 p-1 rounded-md transition-all duration-200"
+                                                    aria-label="Delete course"
+                                                >
+                                                    <Trash2 size={20}/>
+                                                </button>
+                                            </TooltipTrigger>
+                                            <TooltipContent>
+                                                Delete
+                                            </TooltipContent>
+                                        </Tooltip>
+
+
                                     </div>
                                 </TableCell>
                             </TableRow>
