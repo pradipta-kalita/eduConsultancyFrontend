@@ -1,6 +1,6 @@
 import { DashboardCard } from "@/components/DashboardCard.tsx";
 import React from "react";
-import {BookOpen, DollarSign, FileText, Users, MessageCircle, Gauge} from "lucide-react"; // Added a new icon for feedbacks
+import {BookOpen, DollarSign, FileText, Users, MessageCircle, Gauge} from "lucide-react"; // Added a new icon for feedback
 
 const DashboardCards: React.FC = () => {
     const cardData = [
@@ -8,7 +8,7 @@ const DashboardCards: React.FC = () => {
         { title: "Revenue", value: "$54,321", icon: <DollarSign size={24} />, color: "bg-green-100", textColor: "text-green-600" },
         { title: "Total Courses", value: 42, icon: <BookOpen size={24} />, color: "bg-yellow-100", textColor: "text-yellow-600" },
         { title: "Total Blogs", value: 156, icon: <FileText size={24} />, color: "bg-purple-100", textColor: "text-purple-600" },
-        { title: "Feedbacks", value: 22, icon: <MessageCircle size={24} />, color: "bg-red-100", textColor: "text-red-600" }, // New icon and color for feedbacks
+        { title: "Feedbacks", value: 22, icon: <MessageCircle size={24} />, color: "bg-red-100", textColor: "text-red-600" }, // New icon and color for feedback
     ];
 
     return (

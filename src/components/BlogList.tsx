@@ -1,65 +1,39 @@
-import React, { useState } from "react"
-import { Edit, Trash2 } from 'lucide-react'
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/components/ui/table"
-import {
-    Tooltip,
-    TooltipContent,
-    TooltipTrigger,
-} from "@/components/ui/tooltip"
-
-import {
-    Pagination,
-    PaginationContent,
-    PaginationItem,
-    PaginationLink,
-    PaginationNext,
-    PaginationPrevious,
-} from "@/components/ui/pagination"
-import { cn } from "@/lib/utils"
+import React, { useState } from "react";
+import { Edit, Eye, Trash2 } from "lucide-react";
+import { cn } from "@/lib/utils.ts"; // Utility function for conditional classnames
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import PrimaryButton from "@/components/Buttons/PrimaryButton.tsx";
 
-interface CourseSummary {
-    title: string
-    instructor: string
-    price: number
-    published_at: string
-    status: "Active" | "Inactive"
+type FilterType = "All" | "Published" | "Draft" | "Archived";
+
+interface BlogSummary {
+    id: string;
+    title: string;
+    publishedAt: string;
+    summary: string;
+    author: string;
+    status: string;
 }
 
-const courses: CourseSummary[] = [
-    { title: "React for Beginners", instructor: "John Doe", price: 99, published_at: "2024-01-01", status: "Active" },
-    { title: "Advanced CSS", instructor: "Jane Smith", price: 120, published_at: "2024-02-15", status: "Active" },
-    { title: "JavaScript Essentials", instructor: "Alice Brown", price: 80, published_at: "2024-03-10", status: "Inactive" },
-    { title: "Node.js Mastery", instructor: "David Lee", price: 110, published_at: "2024-03-01", status: "Active" },
-    { title: "Python for Data Science", instructor: "Eva White", price: 130, published_at: "2024-02-20", status: "Active" },
-    { title: "Full Stack Web Development", instructor: "Mike Green", price: 150, published_at: "2024-01-25", status: "Inactive" },
-    { title: "TypeScript for Professionals", instructor: "Sara Black", price: 100, published_at: "2024-03-05", status: "Active" },
-    { title: "React Native Development", instructor: "Tom Clark", price: 95, published_at: "2024-03-15", status: "Active" },
-    { title: "Angular Crash Course", instructor: "Olivia Scott", price: 110, published_at: "2024-02-28", status: "Inactive" },
-    { title: "Introduction to AI", instructor: "Liam King", price: 140, published_at: "2024-01-10", status: "Active" },
-    { title: "Machine Learning with Python", instructor: "Grace Allen", price: 160, published_at: "2024-01-18", status: "Active" },
-    { title: "Blockchain Fundamentals", instructor: "Jacob White", price: 180, published_at: "2024-02-10", status: "Inactive" },
-]
 
-type FilterType = "All" | "Monthly" | "Weekly" | "Today"
+interface BlogListProps {
+    blogs: BlogSummary[];
+}
 
-const CoursesList: React.FC = () => {
+const BlogList: React.FC<BlogListProps> = ({ blogs }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [activeFilter, setActiveFilter] = useState<FilterType>("All");
     const itemsPerPage = 6;
 
-    const filteredCourses = courses; // Apply actual filtering logic here based on activeFilter
+    const filteredBlogs = blogs.filter((blog) =>
+        activeFilter === "All" || blog.status === activeFilter
+    );
 
     const startIndex = (currentPage - 1) * itemsPerPage;
-    const currentCourses = filteredCourses.slice(startIndex, startIndex + itemsPerPage);
-    const totalPages = Math.ceil(filteredCourses.length / itemsPerPage);
+    const currentBlogs = filteredBlogs.slice(startIndex, startIndex + itemsPerPage);
+    const totalPages = Math.ceil(filteredBlogs.length / itemsPerPage);
 
     return (
         <div className="bg-white pt-4 px-10 rounded-xl shadow-md border-gray-200">
@@ -67,7 +41,7 @@ const CoursesList: React.FC = () => {
             <div className="mb-6 flex justify-between items-center">
                 {/* Filters */}
                 <div className="flex gap-4">
-                    {["All", "Monthly", "Weekly", "Today"].map((filter) => (
+                    {["All", "Published", "Draft", "Archived"].map((filter) => (
                         <button
                             key={filter}
                             onClick={() => setActiveFilter(filter as FilterType)}
@@ -82,10 +56,10 @@ const CoursesList: React.FC = () => {
                         </button>
                     ))}
                 </div>
-                <PrimaryButton className={"hover:bg-purple-100 hover:text-purple-600"}>
-                    + New Course
+                {/* "+ New Blog" Button */}
+                <PrimaryButton className="hover:bg-purple-100 hover:text-purple-600 ">
+                    + New Blog
                 </PrimaryButton>
-
             </div>
 
             {/* Table Section */}
@@ -94,36 +68,34 @@ const CoursesList: React.FC = () => {
                     <TableHeader>
                         <TableRow className="bg-white text-gray-600">
                             <TableHead>Title</TableHead>
-                            <TableHead>Instructor</TableHead>
+                            <TableHead>Author</TableHead>
                             <TableHead>Published Date</TableHead>
                             <TableHead>Status</TableHead>
-                            <TableHead className="text-right">Price</TableHead>
                             <TableHead className="text-right">Actions</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {currentCourses.map((course, index) => (
+                        {currentBlogs.map((blog) => (
                             <TableRow
-                                key={index}
+                                key={blog.id}
                                 className="hover:bg-gray-50 transition-colors duration-200 border-b last:border-b-0"
                             >
-                                <TableCell>{course.title}</TableCell>
-                                <TableCell>{course.instructor}</TableCell>
-                                <TableCell>{course.published_at}</TableCell>
+                                <TableCell>{blog.title}</TableCell>
+                                <TableCell>{blog.author}</TableCell>
+                                <TableCell>{new Date(blog.publishedAt).toLocaleDateString()}</TableCell>
                                 <TableCell>
                                     <span
                                         className={cn(
                                             "inline-block px-2 py-1 rounded-md text-sm",
-                                            course.status === "Active"
+                                            blog.status === "Published"
                                                 ? "bg-green-100 text-green-600"
-                                                : "bg-yellow-100 text-yellow-600"
+                                                : blog.status === "Draft"
+                                                    ? "bg-yellow-100 text-yellow-600"
+                                                    : "bg-gray-100 text-gray-600"
                                         )}
                                     >
-                                        {course.status}
+                                        {blog.status}
                                     </span>
-                                </TableCell>
-                                <TableCell className="text-right">
-                                    ${course.price.toFixed(2)}
                                 </TableCell>
                                 <TableCell className="text-right">
                                     <div className="flex justify-end items-center space-x-2">
@@ -131,7 +103,20 @@ const CoursesList: React.FC = () => {
                                             <TooltipTrigger>
                                                 <button
                                                     className="text-blue-600 hover:text-blue-800 p-1 rounded-md transition-all duration-200"
-                                                    aria-label="Edit course"
+                                                    aria-label="View blog"
+                                                >
+                                                    <Eye size={20} />
+                                                </button>
+                                            </TooltipTrigger>
+                                            <TooltipContent>
+                                                View
+                                            </TooltipContent>
+                                        </Tooltip>
+                                        <Tooltip>
+                                            <TooltipTrigger>
+                                                <button
+                                                    className="text-blue-600 hover:text-blue-800 p-1 rounded-md transition-all duration-200"
+                                                    aria-label="Edit blog"
                                                 >
                                                     <Edit size={20} />
                                                 </button>
@@ -144,7 +129,7 @@ const CoursesList: React.FC = () => {
                                             <TooltipTrigger>
                                                 <button
                                                     className="text-red-600 hover:text-red-800 p-1 rounded-md transition-all duration-200"
-                                                    aria-label="Delete course"
+                                                    aria-label="Delete blog"
                                                 >
                                                     <Trash2 size={20} />
                                                 </button>
@@ -198,4 +183,4 @@ const CoursesList: React.FC = () => {
     );
 };
 
-export default CoursesList;
+export default BlogList;

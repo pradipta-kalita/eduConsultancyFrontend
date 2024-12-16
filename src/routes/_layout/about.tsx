@@ -78,7 +78,12 @@ function RouteComponent() {
             <p className="text-lg text-gray-600">
               Join EduConsult Pro today and take the first step towards unlocking your full potential. Whether you're a student looking to excel in your studies or a professional aiming to upskill, we have the resources and expertise to guide you towards success.
             </p>
-            <Link to={'/courses'}>
+            <Link to='/courses' search={{
+                page:1,
+                size:9,
+                order:'asc',
+                sort:'title'
+            }}>
               <button
                   className="mt-8 bg-indigo-600 text-white px-6 py-3 rounded-md font-semibold hover:bg-indigo-700 transition duration-300">
                 Explore Our Courses

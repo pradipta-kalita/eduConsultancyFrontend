@@ -7,8 +7,8 @@ export const Route = createFileRoute('/_admin/admin/courses/')({
 })
 
 function RouteComponent() {
-  return <div className="p-6 flex flex-col gap-6">
+  return <>
     <CoursesDashboard/>
     <CoursesList/>
-  </div>
+  </>
 }

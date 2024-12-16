@@ -37,7 +37,12 @@ import { Route as AdminAdminInboxImport } from './routes/_admin/admin/inbox'
 import { Route as AdminAdminDashboardImport } from './routes/_admin/admin/dashboard'
 import { Route as AdminAdminCalenderImport } from './routes/_admin/admin/calender'
 import { Route as LayoutUserProfileIndexImport } from './routes/_layout/_user/profile/index'
+import { Route as AdminAdminTagsIndexImport } from './routes/_admin/admin/tags/index'
+import { Route as AdminAdminFeedbackIndexImport } from './routes/_admin/admin/feedback/index'
 import { Route as AdminAdminCoursesIndexImport } from './routes/_admin/admin/courses/index'
+import { Route as AdminAdminContactUsIndexImport } from './routes/_admin/admin/contact-us/index'
+import { Route as AdminAdminCategoriesIndexImport } from './routes/_admin/admin/categories/index'
+import { Route as AdminAdminBlogsIndexImport } from './routes/_admin/admin/blogs/index'
 
 // Create/Update Routes
 
@@ -193,9 +198,39 @@ const LayoutUserProfileIndexRoute = LayoutUserProfileIndexImport.update({
   getParentRoute: () => LayoutUserRoute,
 } as any)
 
+const AdminAdminTagsIndexRoute = AdminAdminTagsIndexImport.update({
+  id: '/admin/tags/',
+  path: '/admin/tags/',
+  getParentRoute: () => AdminRoute,
+} as any)
+
+const AdminAdminFeedbackIndexRoute = AdminAdminFeedbackIndexImport.update({
+  id: '/admin/feedback/',
+  path: '/admin/feedback/',
+  getParentRoute: () => AdminRoute,
+} as any)
+
 const AdminAdminCoursesIndexRoute = AdminAdminCoursesIndexImport.update({
   id: '/admin/courses/',
   path: '/admin/courses/',
+  getParentRoute: () => AdminRoute,
+} as any)
+
+const AdminAdminContactUsIndexRoute = AdminAdminContactUsIndexImport.update({
+  id: '/admin/contact-us/',
+  path: '/admin/contact-us/',
+  getParentRoute: () => AdminRoute,
+} as any)
+
+const AdminAdminCategoriesIndexRoute = AdminAdminCategoriesIndexImport.update({
+  id: '/admin/categories/',
+  path: '/admin/categories/',
+  getParentRoute: () => AdminRoute,
+} as any)
+
+const AdminAdminBlogsIndexRoute = AdminAdminBlogsIndexImport.update({
+  id: '/admin/blogs/',
+  path: '/admin/blogs/',
   getParentRoute: () => AdminRoute,
 } as any)
 
@@ -378,11 +413,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutCoursesIndexImport
       parentRoute: typeof LayoutImport
     }
+    '/_admin/admin/blogs/': {
+      id: '/_admin/admin/blogs/'
+      path: '/admin/blogs'
+      fullPath: '/admin/blogs'
+      preLoaderRoute: typeof AdminAdminBlogsIndexImport
+      parentRoute: typeof AdminImport
+    }
+    '/_admin/admin/categories/': {
+      id: '/_admin/admin/categories/'
+      path: '/admin/categories'
+      fullPath: '/admin/categories'
+      preLoaderRoute: typeof AdminAdminCategoriesIndexImport
+      parentRoute: typeof AdminImport
+    }
+    '/_admin/admin/contact-us/': {
+      id: '/_admin/admin/contact-us/'
+      path: '/admin/contact-us'
+      fullPath: '/admin/contact-us'
+      preLoaderRoute: typeof AdminAdminContactUsIndexImport
+      parentRoute: typeof AdminImport
+    }
     '/_admin/admin/courses/': {
       id: '/_admin/admin/courses/'
       path: '/admin/courses'
       fullPath: '/admin/courses'
       preLoaderRoute: typeof AdminAdminCoursesIndexImport
+      parentRoute: typeof AdminImport
+    }
+    '/_admin/admin/feedback/': {
+      id: '/_admin/admin/feedback/'
+      path: '/admin/feedback'
+      fullPath: '/admin/feedback'
+      preLoaderRoute: typeof AdminAdminFeedbackIndexImport
+      parentRoute: typeof AdminImport
+    }
+    '/_admin/admin/tags/': {
+      id: '/_admin/admin/tags/'
+      path: '/admin/tags'
+      fullPath: '/admin/tags'
+      preLoaderRoute: typeof AdminAdminTagsIndexImport
       parentRoute: typeof AdminImport
     }
     '/_layout/_user/profile/': {
@@ -404,7 +474,12 @@ interface AdminRouteChildren {
   AdminAdminSearchRoute: typeof AdminAdminSearchRoute
   AdminAdminSettingsRoute: typeof AdminAdminSettingsRoute
   AdminAdminIndexRoute: typeof AdminAdminIndexRoute
+  AdminAdminBlogsIndexRoute: typeof AdminAdminBlogsIndexRoute
+  AdminAdminCategoriesIndexRoute: typeof AdminAdminCategoriesIndexRoute
+  AdminAdminContactUsIndexRoute: typeof AdminAdminContactUsIndexRoute
   AdminAdminCoursesIndexRoute: typeof AdminAdminCoursesIndexRoute
+  AdminAdminFeedbackIndexRoute: typeof AdminAdminFeedbackIndexRoute
+  AdminAdminTagsIndexRoute: typeof AdminAdminTagsIndexRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
@@ -414,7 +489,12 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminAdminSearchRoute: AdminAdminSearchRoute,
   AdminAdminSettingsRoute: AdminAdminSettingsRoute,
   AdminAdminIndexRoute: AdminAdminIndexRoute,
+  AdminAdminBlogsIndexRoute: AdminAdminBlogsIndexRoute,
+  AdminAdminCategoriesIndexRoute: AdminAdminCategoriesIndexRoute,
+  AdminAdminContactUsIndexRoute: AdminAdminContactUsIndexRoute,
   AdminAdminCoursesIndexRoute: AdminAdminCoursesIndexRoute,
+  AdminAdminFeedbackIndexRoute: AdminAdminFeedbackIndexRoute,
+  AdminAdminTagsIndexRoute: AdminAdminTagsIndexRoute,
 }
 
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
@@ -487,7 +567,12 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AdminAdminIndexRoute
   '/blogs': typeof LayoutBlogsIndexRoute
   '/courses': typeof LayoutCoursesIndexRoute
+  '/admin/blogs': typeof AdminAdminBlogsIndexRoute
+  '/admin/categories': typeof AdminAdminCategoriesIndexRoute
+  '/admin/contact-us': typeof AdminAdminContactUsIndexRoute
   '/admin/courses': typeof AdminAdminCoursesIndexRoute
+  '/admin/feedback': typeof AdminAdminFeedbackIndexRoute
+  '/admin/tags': typeof AdminAdminTagsIndexRoute
   '/profile': typeof LayoutUserProfileIndexRoute
 }
 
@@ -514,7 +599,12 @@ export interface FileRoutesByTo {
   '/admin': typeof AdminAdminIndexRoute
   '/blogs': typeof LayoutBlogsIndexRoute
   '/courses': typeof LayoutCoursesIndexRoute
+  '/admin/blogs': typeof AdminAdminBlogsIndexRoute
+  '/admin/categories': typeof AdminAdminCategoriesIndexRoute
+  '/admin/contact-us': typeof AdminAdminContactUsIndexRoute
   '/admin/courses': typeof AdminAdminCoursesIndexRoute
+  '/admin/feedback': typeof AdminAdminFeedbackIndexRoute
+  '/admin/tags': typeof AdminAdminTagsIndexRoute
   '/profile': typeof LayoutUserProfileIndexRoute
 }
 
@@ -545,7 +635,12 @@ export interface FileRoutesById {
   '/_admin/admin/': typeof AdminAdminIndexRoute
   '/_layout/blogs/': typeof LayoutBlogsIndexRoute
   '/_layout/courses/': typeof LayoutCoursesIndexRoute
+  '/_admin/admin/blogs/': typeof AdminAdminBlogsIndexRoute
+  '/_admin/admin/categories/': typeof AdminAdminCategoriesIndexRoute
+  '/_admin/admin/contact-us/': typeof AdminAdminContactUsIndexRoute
   '/_admin/admin/courses/': typeof AdminAdminCoursesIndexRoute
+  '/_admin/admin/feedback/': typeof AdminAdminFeedbackIndexRoute
+  '/_admin/admin/tags/': typeof AdminAdminTagsIndexRoute
   '/_layout/_user/profile/': typeof LayoutUserProfileIndexRoute
 }
 
@@ -574,7 +669,12 @@ export interface FileRouteTypes {
     | '/admin'
     | '/blogs'
     | '/courses'
+    | '/admin/blogs'
+    | '/admin/categories'
+    | '/admin/contact-us'
     | '/admin/courses'
+    | '/admin/feedback'
+    | '/admin/tags'
     | '/profile'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -600,7 +700,12 @@ export interface FileRouteTypes {
     | '/admin'
     | '/blogs'
     | '/courses'
+    | '/admin/blogs'
+    | '/admin/categories'
+    | '/admin/contact-us'
     | '/admin/courses'
+    | '/admin/feedback'
+    | '/admin/tags'
     | '/profile'
   id:
     | '__root__'
@@ -629,7 +734,12 @@ export interface FileRouteTypes {
     | '/_admin/admin/'
     | '/_layout/blogs/'
     | '/_layout/courses/'
+    | '/_admin/admin/blogs/'
+    | '/_admin/admin/categories/'
+    | '/_admin/admin/contact-us/'
     | '/_admin/admin/courses/'
+    | '/_admin/admin/feedback/'
+    | '/_admin/admin/tags/'
     | '/_layout/_user/profile/'
   fileRoutesById: FileRoutesById
 }
@@ -682,7 +792,12 @@ export const routeTree = rootRoute
         "/_admin/admin/search",
         "/_admin/admin/settings",
         "/_admin/admin/",
-        "/_admin/admin/courses/"
+        "/_admin/admin/blogs/",
+        "/_admin/admin/categories/",
+        "/_admin/admin/contact-us/",
+        "/_admin/admin/courses/",
+        "/_admin/admin/feedback/",
+        "/_admin/admin/tags/"
       ]
     },
     "/_layout": {
@@ -792,8 +907,28 @@ export const routeTree = rootRoute
       "filePath": "_layout/courses/index.tsx",
       "parent": "/_layout"
     },
+    "/_admin/admin/blogs/": {
+      "filePath": "_admin/admin/blogs/index.tsx",
+      "parent": "/_admin"
+    },
+    "/_admin/admin/categories/": {
+      "filePath": "_admin/admin/categories/index.tsx",
+      "parent": "/_admin"
+    },
+    "/_admin/admin/contact-us/": {
+      "filePath": "_admin/admin/contact-us/index.tsx",
+      "parent": "/_admin"
+    },
     "/_admin/admin/courses/": {
       "filePath": "_admin/admin/courses/index.tsx",
+      "parent": "/_admin"
+    },
+    "/_admin/admin/feedback/": {
+      "filePath": "_admin/admin/feedback/index.tsx",
+      "parent": "/_admin"
+    },
+    "/_admin/admin/tags/": {
+      "filePath": "_admin/admin/tags/index.tsx",
       "parent": "/_admin"
     },
     "/_layout/_user/profile/": {

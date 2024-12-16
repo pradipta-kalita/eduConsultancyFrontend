@@ -45,7 +45,7 @@ const CoursesDashboard: React.FC = () => {
         <>
             <h2 className="text-2xl font-bold text-gray-700 flex items-center">
                 <BookOpen className="w-6 h-6 mr-3 text-orange-600" />
-                Course Management Overview
+                Course Management Dashboard
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 ">
                 {cardData.map((card, index) => (

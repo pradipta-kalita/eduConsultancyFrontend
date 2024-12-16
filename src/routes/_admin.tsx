@@ -53,7 +53,9 @@ function RouteComponent() {
 
           <div className="p-4 flex-grow bg-gradient-to-r from-gray-50 via-gray-100 to-gray-50 min-h-screen">
             <SidebarTrigger/>
-            <Outlet/>
+            <div className="p-6 flex flex-col gap-6">
+              <Outlet/>
+            </div>
           </div>
         </SidebarProvider>
       </div>
