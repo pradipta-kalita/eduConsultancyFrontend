@@ -1,7 +1,7 @@
 import axios from "@/utils/axiosInstance";
-import axiosLib, {AxiosError} from "axios";
-import {Post} from "@/service/types";
-export const fetchBlogs = async (page: number) => {
+import {AxiosError} from "axios";
+import {BlogPageResponse, BlogResponse} from "@/types/blogTypes.ts";
+export const fetchBlogs = async (page: number):Promise<BlogPageResponse> => {
 
     try {
         const response = await axios.get(`/blogs?page=${page}&order=desc`);
@@ -15,7 +15,7 @@ export const fetchBlogs = async (page: number) => {
     }
 };
 
-export const blogQueryOptions = (blogId: string): { queryKey: string[]; queryFn: () => Promise<Post> } => ({
+export const blogQueryOptions = (blogId: string): { queryKey: string[]; queryFn: () => Promise<BlogResponse> } => ({
     queryKey: ['blogs', blogId],
     queryFn: async () => {
         const response = await axios.get(`/blogs/${blogId}`);
@@ -25,7 +25,3 @@ export const blogQueryOptions = (blogId: string): { queryKey: string[]; queryFn:
         return response.data;
     },
 });
-
-export const fetchBlog:(blogId: string) => Promise<axiosLib.AxiosResponse<Post>> = (blogId:string) => {
-    return axios.get(`/blogs/${blogId}`);
-}

@@ -1,7 +1,7 @@
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import {Link} from "@tanstack/react-router";
-import { CourseSummary } from "@/service/types";
+import { CourseSummary } from "@/types/courseTypes";
 
 
 interface CourseCardProps {

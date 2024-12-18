@@ -1,10 +1,11 @@
 import { createFileRoute } from '@tanstack/react-router'
 import BlogLayout from "@/components/BlogLayout.tsx";
-import {BlogPostCard,BlogPost} from "@/components/BlogPostCard.tsx";
+import {BlogPostCard} from "@/components/BlogPostCard.tsx";
 import {useInfiniteQuery,} from "@tanstack/react-query";
 import {fetchBlogs} from "@/service/blogs.ts";
 import {useInView} from "react-intersection-observer";
 import {useEffect} from "react";
+import {BlogPageResponse, BlogSummary} from "@/types/blogTypes.ts";
 
 
 export const Route = createFileRoute('/_layout/blogs/')({
@@ -50,8 +51,8 @@ function RouteComponent() {
   return (
       <BlogLayout>
         <div className="space-y-2">
-          {data?.pages?.map(page => {
-            return page?.blogs.map((post: BlogPost) => {
+          {data?.pages?.map((page:BlogPageResponse) => {
+            return page?.blogs.map((post:BlogSummary) => {
               return <BlogPostCard post={post} key={post.id}/>
             })
           })}

@@ -33,11 +33,11 @@ function RouteComponent() {
 
     // Only navigate after loading is complete
     if (!loading) {
-      // if (!user) {
-      //   navigate({ to: '/auth/login' });
-      // } else if (user.role !== 'ADMIN') {
-      //   navigate({ to: '/profile' });
-      // }
+      if (!user) {
+        navigate({ to: '/auth/login' });
+      } else if (user.role !== 'ADMIN') {
+        navigate({ to: '/profile' });
+      }
     }
   }, [user, loading, refreshToken, navigate]); // Add necessary dependencies to avoid infinite loops
 

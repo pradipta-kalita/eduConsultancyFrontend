@@ -18,6 +18,14 @@ export interface BlogSummary {
     status: string;
 }
 
+export interface BlogResponse {
+    id:string;
+    title: string;
+    author: string;
+    authorId: string;
+    publishedAt: string;
+    content: string;
+}
 export interface Tag {
     id: string;
     tagName: string;

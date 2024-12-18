@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useQuery,keepPreviousData } from "@tanstack/react-query";
-import { createFileRoute } from "@tanstack/react-router";
+import {createFileRoute, useNavigate} from "@tanstack/react-router";
 import { CourseCard } from "@/components/CourseCard";
 import {z} from 'zod';
 import {
@@ -12,7 +12,7 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import { fetchCoursesPage } from "@/service/courses";
-import { CourseSummary } from "@/service/types";
+import { CourseSummary } from "@/types/courseTypes";
 
 const courseSearchSchema = z.object({
   page: z.number().default(1),
@@ -29,6 +29,7 @@ export const Route = createFileRoute("/_layout/courses/")({
 });
 
 function RouteComponent() {
+  const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const {page,size,sort,order} = Route.useSearch()
   const { data, isLoading, isError } = useQuery({
@@ -44,8 +45,14 @@ function RouteComponent() {
     return <div>No data available</div>;
   }
 
-  const { courses, totalPages } = data; 
-  const paginate = (page: number) => setCurrentPage(page);
+  const { courses, totalPages } = data;
+  // Function to update the URL and navigate to the correct page
+  const paginate = (page: number) => {
+    setCurrentPage(page);
+    navigate({
+      to: `?page=${page}&size=${size}&sort=${sort}&order=${order}`,
+    });
+  };
 
   return (
     <div className="px-4 pt-32 pb-14">

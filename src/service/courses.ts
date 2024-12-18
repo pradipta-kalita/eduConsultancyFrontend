@@ -1,8 +1,8 @@
 import axios from "@/utils/axiosInstance";
-import { Course, CoursePage } from "./types";
+import { CourseResponse, CoursePageResponse} from "@/types/courseTypes.ts";
 
-/// TO FETCH SIGNLE COURSE USING COURSE ID
-export const courseQueryOptions = (courseId: string): { queryKey: string[]; queryFn: () => Promise<Course> } => ({
+/// TO FETCH SINGLE COURSE USING COURSE ID
+export const courseQueryOptions = (courseId: string): { queryKey: string[]; queryFn: () => Promise<CourseResponse> } => ({
     queryKey: ['courses', courseId],
     queryFn: async () => {
         const response = await axios.get(`/courses/${courseId}`);
@@ -14,24 +14,12 @@ export const courseQueryOptions = (courseId: string): { queryKey: string[]; quer
 });
 
 
-/// I DON"T THINK I WILL BE ABLE TO USE THIS
-export const coursesPageQueryOptions = (): { queryKey: string[]; queryFn: () => Promise<CoursePage> } => ({
-    queryKey: ['courses'],
-    queryFn: async () => {
-        const response = await axios.get(`/courses`);
-        if (!response.data) {
-            throw new Error(`Courses not found`);
-        }
-        return response.data;
-    },
-});
-
 export const fetchCoursesPage = async (
     page: number,
     size: number,
     order: string,
     sort: string
-  ): Promise<CoursePage> => {
+  ): Promise<CoursePageResponse> => {
     const response = await axios.get(`/courses`, {
       params: {
         page: page - 1, // page starts from 0, so subtract 1

@@ -43,6 +43,8 @@ import { Route as AdminAdminCoursesIndexImport } from './routes/_admin/admin/cou
 import { Route as AdminAdminContactUsIndexImport } from './routes/_admin/admin/contact-us/index'
 import { Route as AdminAdminCategoriesIndexImport } from './routes/_admin/admin/categories/index'
 import { Route as AdminAdminBlogsIndexImport } from './routes/_admin/admin/blogs/index'
+import { Route as AdminAdminFeedbackIdImport } from './routes/_admin/admin/feedback/$id'
+import { Route as AdminAdminContactUsIdImport } from './routes/_admin/admin/contact-us/$id'
 
 // Create/Update Routes
 
@@ -234,6 +236,18 @@ const AdminAdminBlogsIndexRoute = AdminAdminBlogsIndexImport.update({
   getParentRoute: () => AdminRoute,
 } as any)
 
+const AdminAdminFeedbackIdRoute = AdminAdminFeedbackIdImport.update({
+  id: '/admin/feedback/$id',
+  path: '/admin/feedback/$id',
+  getParentRoute: () => AdminRoute,
+} as any)
+
+const AdminAdminContactUsIdRoute = AdminAdminContactUsIdImport.update({
+  id: '/admin/contact-us/$id',
+  path: '/admin/contact-us/$id',
+  getParentRoute: () => AdminRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -413,6 +427,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutCoursesIndexImport
       parentRoute: typeof LayoutImport
     }
+    '/_admin/admin/contact-us/$id': {
+      id: '/_admin/admin/contact-us/$id'
+      path: '/admin/contact-us/$id'
+      fullPath: '/admin/contact-us/$id'
+      preLoaderRoute: typeof AdminAdminContactUsIdImport
+      parentRoute: typeof AdminImport
+    }
+    '/_admin/admin/feedback/$id': {
+      id: '/_admin/admin/feedback/$id'
+      path: '/admin/feedback/$id'
+      fullPath: '/admin/feedback/$id'
+      preLoaderRoute: typeof AdminAdminFeedbackIdImport
+      parentRoute: typeof AdminImport
+    }
     '/_admin/admin/blogs/': {
       id: '/_admin/admin/blogs/'
       path: '/admin/blogs'
@@ -474,6 +502,8 @@ interface AdminRouteChildren {
   AdminAdminSearchRoute: typeof AdminAdminSearchRoute
   AdminAdminSettingsRoute: typeof AdminAdminSettingsRoute
   AdminAdminIndexRoute: typeof AdminAdminIndexRoute
+  AdminAdminContactUsIdRoute: typeof AdminAdminContactUsIdRoute
+  AdminAdminFeedbackIdRoute: typeof AdminAdminFeedbackIdRoute
   AdminAdminBlogsIndexRoute: typeof AdminAdminBlogsIndexRoute
   AdminAdminCategoriesIndexRoute: typeof AdminAdminCategoriesIndexRoute
   AdminAdminContactUsIndexRoute: typeof AdminAdminContactUsIndexRoute
@@ -489,6 +519,8 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminAdminSearchRoute: AdminAdminSearchRoute,
   AdminAdminSettingsRoute: AdminAdminSettingsRoute,
   AdminAdminIndexRoute: AdminAdminIndexRoute,
+  AdminAdminContactUsIdRoute: AdminAdminContactUsIdRoute,
+  AdminAdminFeedbackIdRoute: AdminAdminFeedbackIdRoute,
   AdminAdminBlogsIndexRoute: AdminAdminBlogsIndexRoute,
   AdminAdminCategoriesIndexRoute: AdminAdminCategoriesIndexRoute,
   AdminAdminContactUsIndexRoute: AdminAdminContactUsIndexRoute,
@@ -567,6 +599,8 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AdminAdminIndexRoute
   '/blogs': typeof LayoutBlogsIndexRoute
   '/courses': typeof LayoutCoursesIndexRoute
+  '/admin/contact-us/$id': typeof AdminAdminContactUsIdRoute
+  '/admin/feedback/$id': typeof AdminAdminFeedbackIdRoute
   '/admin/blogs': typeof AdminAdminBlogsIndexRoute
   '/admin/categories': typeof AdminAdminCategoriesIndexRoute
   '/admin/contact-us': typeof AdminAdminContactUsIndexRoute
@@ -599,6 +633,8 @@ export interface FileRoutesByTo {
   '/admin': typeof AdminAdminIndexRoute
   '/blogs': typeof LayoutBlogsIndexRoute
   '/courses': typeof LayoutCoursesIndexRoute
+  '/admin/contact-us/$id': typeof AdminAdminContactUsIdRoute
+  '/admin/feedback/$id': typeof AdminAdminFeedbackIdRoute
   '/admin/blogs': typeof AdminAdminBlogsIndexRoute
   '/admin/categories': typeof AdminAdminCategoriesIndexRoute
   '/admin/contact-us': typeof AdminAdminContactUsIndexRoute
@@ -635,6 +671,8 @@ export interface FileRoutesById {
   '/_admin/admin/': typeof AdminAdminIndexRoute
   '/_layout/blogs/': typeof LayoutBlogsIndexRoute
   '/_layout/courses/': typeof LayoutCoursesIndexRoute
+  '/_admin/admin/contact-us/$id': typeof AdminAdminContactUsIdRoute
+  '/_admin/admin/feedback/$id': typeof AdminAdminFeedbackIdRoute
   '/_admin/admin/blogs/': typeof AdminAdminBlogsIndexRoute
   '/_admin/admin/categories/': typeof AdminAdminCategoriesIndexRoute
   '/_admin/admin/contact-us/': typeof AdminAdminContactUsIndexRoute
@@ -669,6 +707,8 @@ export interface FileRouteTypes {
     | '/admin'
     | '/blogs'
     | '/courses'
+    | '/admin/contact-us/$id'
+    | '/admin/feedback/$id'
     | '/admin/blogs'
     | '/admin/categories'
     | '/admin/contact-us'
@@ -700,6 +740,8 @@ export interface FileRouteTypes {
     | '/admin'
     | '/blogs'
     | '/courses'
+    | '/admin/contact-us/$id'
+    | '/admin/feedback/$id'
     | '/admin/blogs'
     | '/admin/categories'
     | '/admin/contact-us'
@@ -734,6 +776,8 @@ export interface FileRouteTypes {
     | '/_admin/admin/'
     | '/_layout/blogs/'
     | '/_layout/courses/'
+    | '/_admin/admin/contact-us/$id'
+    | '/_admin/admin/feedback/$id'
     | '/_admin/admin/blogs/'
     | '/_admin/admin/categories/'
     | '/_admin/admin/contact-us/'
@@ -792,6 +836,8 @@ export const routeTree = rootRoute
         "/_admin/admin/search",
         "/_admin/admin/settings",
         "/_admin/admin/",
+        "/_admin/admin/contact-us/$id",
+        "/_admin/admin/feedback/$id",
         "/_admin/admin/blogs/",
         "/_admin/admin/categories/",
         "/_admin/admin/contact-us/",
@@ -906,6 +952,14 @@ export const routeTree = rootRoute
     "/_layout/courses/": {
       "filePath": "_layout/courses/index.tsx",
       "parent": "/_layout"
+    },
+    "/_admin/admin/contact-us/$id": {
+      "filePath": "_admin/admin/contact-us/$id.tsx",
+      "parent": "/_admin"
+    },
+    "/_admin/admin/feedback/$id": {
+      "filePath": "_admin/admin/feedback/$id.tsx",
+      "parent": "/_admin"
     },
     "/_admin/admin/blogs/": {
       "filePath": "_admin/admin/blogs/index.tsx",

@@ -86,13 +86,21 @@ function RouteComponent() {
             </div>
             <div>
               <span className="text-3xl font-bold text-indigo-600">₹{fetchedCourse.price.toFixed(2)}</span>
-              {user ? (
+              {user ? user?.role==="ADMIN"?
+                  (
+                      <button
+                          className="ml-4 bg-indigo-600 text-white py-2 px-6 rounded-md hover:bg-indigo-700 transition duration-300"
+                      >
+                        Enroll Now
+                      </button>
+                  )
+                  :(
                   <button
-                    className="ml-4 bg-indigo-600 text-white py-2 px-6 rounded-md hover:bg-indigo-700 transition duration-300"
+                      className="ml-4 bg-indigo-600 text-white py-2 px-6 rounded-md hover:bg-indigo-700 transition duration-300"
                   >
                     Enroll Now
                   </button>
-                ) : (
+              ) : (
                   <Link to='/auth/login'>
                     <button
                       
